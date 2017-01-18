@@ -1,6 +1,6 @@
 /**
  *
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: represents a Round of Top Trumps, in which cards are played and d
