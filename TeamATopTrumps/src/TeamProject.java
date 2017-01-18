@@ -22,5 +22,7 @@ public class TeamProject {
 
             TopTrumpsGUI display = new TopTrumpsGUI();
             display.setVisible(true);
+
+            //bla bla
     }
 }
