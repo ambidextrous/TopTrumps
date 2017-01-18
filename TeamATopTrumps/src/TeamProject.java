@@ -1,5 +1,5 @@
 /**
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: main class to launch GUI.
@@ -22,7 +22,5 @@ public class TeamProject {
 
             TopTrumpsGUI display = new TopTrumpsGUI();
             display.setVisible(true);
-
-            //bla bla
     }
 }
