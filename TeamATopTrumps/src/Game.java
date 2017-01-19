@@ -1,6 +1,6 @@
 /**
  *
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: represents a game of top trumps, which is composed of multiple rounds
@@ -48,9 +48,9 @@ public class Game {
     }
     
     /**
-     * Returns the number of draws in the game.
+     * Returns the number of rounds played in the game.
      * 
-     * @return the number of draws, int
+     * @return the number of rounds, int
      */
     public int getNumRounds() {
 

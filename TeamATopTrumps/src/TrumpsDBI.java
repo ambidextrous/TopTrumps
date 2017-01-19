@@ -251,7 +251,7 @@ public class TrumpsDBI {
             
             while (rs.next()) {
             
-                numHumanWins = rs.getInt("numHumanWins");
+                numHumanWins = rs.getInt(1);
             }
             
             return numHumanWins;
