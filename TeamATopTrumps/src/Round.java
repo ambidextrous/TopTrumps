@@ -87,18 +87,14 @@ public class Round {
         
         int pileSizeAtStart = this.pile.getPileSize();
         
-        boolean d = checkIfDraw();
-        
-        this.draw = d;
+        this.draw = checkIfDraw();
         
         Player winner;
         
-        if (!this.draw) {
-            
+        if (!this.draw) { 
             winner = calculateWinner();
-            
-        } else {
-            
+        } 
+        else { 
             winner = null;
         }
         
@@ -141,18 +137,13 @@ public class Round {
                     
                     this.pile.giveCard(c);
                 }
-            }
-            
-        } else {
-            
-            // Give cards in play to winner
-            
+            }    
+        }
+        else {
+            // Give cards in play to winner 
             for (int i = 0; i < cardsInPlay.length; i++) {
-                
                 Card c = cardsInPlay[i];
-                
                 if (c != null) {
-                    
                     winner.giveCard(c);
                 }
             }            
@@ -166,8 +157,10 @@ public class Round {
                 if (c != null) {
                     
                     winner.giveCard(c);
+                    
                 }
-            }          
+            }    
+            pile = new CommunalPile(); // Clear communal pile
         }
     }
     
@@ -193,7 +186,7 @@ public class Round {
     }
 
     /**
-     * Returns whether the Rounded was a draw: creates zeroed integer array 
+     * Returns whether the Round was a draw: creates zeroed integer array 
      * and increments each element if it for each player that has that score 
      * for their trump; returns whether the highest number in that array is 
      * greater than 1.
@@ -203,7 +196,7 @@ public class Round {
     private boolean checkIfDraw() {
         
         boolean draw = false;
-        int maxScore = 100;
+        int maxScore = 50;
         
         int[] playerScores = new int[maxScore];
         
@@ -217,16 +210,16 @@ public class Round {
             }
         }
         
-        for (int i = 0; i < playerScores.length; i++) {
+        for (int i = maxScore - 1; i >= 0; i--) {
             
-            if (playerScores[i] > 1) {
-                
+            if (playerScores[i] > 1) { 
                 draw = true;
-                
-            } else {
-                
+                break;   
+            } 
+            
+            else      
                 draw = false;
-            }
+            
         }
         
         return draw;
@@ -382,11 +375,9 @@ public class Round {
         String s = String.format("");        
         
         if (this.draw) {
-            
             s += String.format("This round was a draw.%n%n");
-
-        } else {
-            
+        }
+        else {
             s += String.format(
                     "%s won the previous round%n%n", this.winner.getName());
         }   

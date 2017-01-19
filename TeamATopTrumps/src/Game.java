@@ -4,7 +4,7 @@
  * store data.
  * 
  * Class: represents a game of top trumps, which is composed of multiple rounds
- * and finishes when won player has won all of the cards.
+ * and finishes when one player has won all of the cards.
  * 
  * @author Team A
  *         Faisal Ahsan 2242114a 

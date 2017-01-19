@@ -1,5 +1,5 @@
 /*
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+java * Programme: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: Produces a statistics report window to describe historical top 

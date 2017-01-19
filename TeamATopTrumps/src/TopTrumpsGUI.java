@@ -21,7 +21,7 @@ import javax.swing.JTextArea;
 
 /**
  *
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: GUI class for user interaction and for launching model-controller 
@@ -106,7 +106,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         this.DECK_FILE_NAME = "deck.txt";
 
         // Comment out filename and add another to use a different deck
-        this.NUM_CARDS = 40;
+        this.NUM_CARDS = 6;
 
         this.NUM_ATTRIBUTES = 5;
         this.USER_NAME = "You";

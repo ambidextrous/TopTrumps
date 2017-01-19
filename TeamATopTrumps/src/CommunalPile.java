@@ -41,7 +41,6 @@ public class CommunalPile {
         Card[] newHand = new Card[this.cards.length+1];
         
         for (int i = 0; i < cards.length; i++) {
-            
             newHand[i] = this.cards[i];
         }
         
