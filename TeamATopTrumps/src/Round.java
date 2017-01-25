@@ -7,8 +7,12 @@
  * distributed to the winner in the case of a win or added to the CommunalPile
  * in the case of a draw.
  * 
- * @author Team A Faisal Ahsan 2242114a Aidan Butler 2281611b Stewart Brown
- *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
+ * @author Team A
+ *  Faisal Ahsan 2242114a 
+ *  Aidan Butler 2281611b 
+ *  Stewart Brown 2276998b 
+ *  Jane Kennedy 2287767k 
+ *  Svetoslava Nikolova 1004630n
  */
 public class Round {
 	private final int NUM_ATTRIBUTES;

@@ -814,7 +814,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
     }
  
     /**
-     * Prints a formatted String representation of given Card's attriburte 
+     * Prints a formatted String representation of given Card's attribute 
      * values to the console.
      * 
      * @param c 
@@ -868,7 +868,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         for (int i = 0; i < this.NUM_CARDS; i++) {
             
             // Choose next player dealt to
-            Player p = currentPlayers[i%numPlayers];
+            Player p = currentPlayers[numPlayers];
             // Deal card
             p.giveCard(this.currentDeck.getCardAtIndex(i));            
         }
