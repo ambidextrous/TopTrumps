@@ -36,6 +36,9 @@ import javax.swing.JTextArea;
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
     
+	// Instance variable to store relevant value(s) of cards from previous round
+	int [] savedValues;
+	
     // Constants
     private final String DECK_FILE_NAME;
     private final int NUM_CARDS;
@@ -367,6 +370,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                 NUM_CARDS);
         
         this.currentRound = CurrRound;
+        	
+        savedValues = this.currentRound.saveTrumpValues();
+        
         this.currentRound.playRound();
         
         resetDecidingPlayer();

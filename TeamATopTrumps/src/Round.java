@@ -18,13 +18,13 @@ public class Round {
     private final int NUM_ATTRIBUTES;
     private Player[] players;
     private Card[] cardsInPlay;
-    //private String DisplayString;
     private String LINE_BREAK;
     private int trumpIndex;
     private CommunalPile pile;
     private Player winner;
     private Deck deck;
     private boolean draw;
+    private int [] prevTrumpValues;
 
     public Round(Player[] playersArray, Player CurrentDecidingPlayer, 
             CommunalPile CP, int trumpInd, Deck d, 
@@ -37,8 +37,12 @@ public class Round {
         this.pile = CP;
         this.winner = null;
         this.draw = false;
-
+        
         int userChoseTrump = 0;
+        
+        prevTrumpValues = new int[players.length];
+        
+        //NOTE: SHOULD THESE VALUES BE INITIALISED TO 0 IN THE CONSTRUCTOR?
         
         // User player choice or algorithm to select trump for round
         if (trumpInd == userChoseTrump) {
@@ -115,6 +119,26 @@ public class Round {
         }        
     }
       
+    /**
+     * Method to return an integer array containing the 
+     * Trump values from the previous round.
+     */
+    
+    public int[] saveTrumpValues() {
+    	
+    	Card [] cards = new Card[players.length];
+    	
+    	for (int i = 0; i < cards.length; i++) {
+    		 
+    		if (players[i].getHandSize() != 0) {
+    			
+    			cards[i] = players[i].viewTopCard();
+    			prevTrumpValues[i] = cards[i].getAttriValAtIndex(trumpIndex);
+    		}		
+    	}   	
+    	return prevTrumpValues;
+    }
+    
     /**
      * Distributes Card: in the case of a win, all Cards in the CommunalPile
      * go to the winner as do all of the cards in play; in the case of a draw
@@ -394,8 +418,7 @@ public class Round {
      */
     private String getGameWonLostString() {
         
-        String s = String.format("");
-        
+        String s = String.format("");     
         
         if (this.boolUserWonGame()) {
             
@@ -430,12 +453,11 @@ public class Round {
                 Card c = p.viewTopCard();
             
                 s += String.format("%s: ", players[i].getName());
-                s += String.format(
-                        "%s    ",  c.getAttriValAtIndex(this.trumpIndex));
+                s += String.format("%d    ", 
+                		prevTrumpValues[i]);
             }
         }
-        s += String.format("%n%n"); 
-        
+        s += String.format("%n%n");         
         return s;
     }
     
