@@ -301,7 +301,7 @@ public class Round {
         int playerIndex = 0;
         Player user = this.players[playerIndex];
         
-        return user.getHandSize() == this.deck.getDeckLength();
+        return user.getHandSize() == this.deck.getDeckLength()-this.pile;
     }
 
     /**
