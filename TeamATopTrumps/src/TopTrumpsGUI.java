@@ -868,7 +868,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         for (int i = 0; i < this.NUM_CARDS; i++) {
             
             // Choose next player dealt to
-            Player p = currentPlayers[numPlayers];
+            Player p = currentPlayers[i % numPlayers];
             // Deal card
             p.giveCard(this.currentDeck.getCardAtIndex(i));            
         }
@@ -942,7 +942,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                 String.valueOf(numPlayersComboBox.getSelectedItem());
         String[] numPlayersArray = numPlayersString.split(" ");
         int numPlayers = Integer.parseInt(numPlayersArray[0]);
-        
+        System.out.println(numPlayers);
         return numPlayers;
     }
 }
