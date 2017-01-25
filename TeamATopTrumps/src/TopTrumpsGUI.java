@@ -36,6 +36,9 @@ import javax.swing.JTextArea;
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
     
+	// Instance variable to store relevant value(s) of cards from previous round
+	int [] savedValues;
+	
     // Constants
     private final String DECK_FILE_NAME;
     private final int NUM_CARDS;
@@ -258,7 +261,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         
         Card[] CardArray = generateCardsArray(deckLineStrings);
         
-        // Creat deck and shuffle
+        // Create deck. Shuffle when new game is launched
         this.currentDeck = new Deck(CardArray, attri1Name, attri2Name, 
                 attri3Name, attri4Name, attri5Name);
         
@@ -272,15 +275,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         playAttr3Button.setText(attri3Name);
         playAttr4Button.setText(attri4Name);
         playAttr5Button.setText(attri5Name);
-        
-        
-        /**
-         * Debugging note:
-         * 
-         * Comment out the line below to stop the deck from being shuffled, 
-         * useful for testing.
-         */
-        this.currentDeck.shuffleDeck();
+
     }
     
     /**
@@ -367,6 +362,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                 NUM_CARDS);
         
         this.currentRound = CurrRound;
+        	
+        savedValues = this.currentRound.saveTrumpValues();
+        
         this.currentRound.playRound();
         
         resetDecidingPlayer();
@@ -375,10 +373,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         
         this.generateAndSetDisplayText();
 
-        setButtonsForNextRound();
-        
+        setButtonsForNextRound();      
         updateGameInfo();
-                
         checkIfGameOver();
     }
     
@@ -405,8 +401,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
     private void displayEndOfGamePopUp() {
         
         String gameResult = "lost";
-        
-        boolean userWon;
         
         if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
             
@@ -441,7 +435,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
     private void setGameWinner() {
         
         if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
-            
+          
             this.currentGame.setHumanWinner(true);
             
         } else {
@@ -498,7 +492,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
      */
     private void resetDecidingPlayer() {
         
-        if (!this.currentRound.isDraw()) {
+    	// If the current round is not a draw
+        if (! this.currentRound.isDraw()) {
             
             this.decidingPlayer = this.currentRound.getWinner();
         }        
@@ -659,7 +654,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
      */
     private void setButtonsForComputerChoice() {
         
-        // Ensable computer choice button
+        // Enable computer choice button
         this.playCompChooseButton.setEnabled(true);
         // Disable user choice buttons
         this.playAttr1Button.setEnabled(false);
@@ -702,6 +697,22 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
      */
     private void startNewGame() {
         
+    	/* Clear text area of previous game information
+    	 * whenever successive games are played.
+    	 */
+    	
+    	prevRoundString = "";
+    	
+        /**
+         * Debugging note:
+         * 
+         * Comment out the line below to stop the deck from being shuffled, 
+         * useful for testing.
+         */
+    	currentDeck.shuffleDeck();
+    	
+    	// Call methods to generate and display new game.
+    	
         disableMetaButtons(); 
         generateNewGame();
         generatePlayers();
