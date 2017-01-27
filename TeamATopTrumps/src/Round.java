@@ -98,7 +98,7 @@ public class Round {
 
 		this.winner = winner;
 
-		Card[] cardsInPlay = takeCards();
+		Card [] cardsInPlay = takeCards();
 
 		distributeCards(cardsInPlay, winner);
 
@@ -179,7 +179,7 @@ public class Round {
 
 				}
 			}
-			pile = new CommunalPile(); // Clear communal pile
+			pile = new CommunalPile();
 		}
 	}
 
@@ -225,19 +225,18 @@ public class Round {
 
 				Card c = players[i].getCardAtIndex(0);
 				int score = c.getAttriValAtIndex(this.trumpIndex);
-				playerScores[score]++;
+				playerScores[score - 1]++;
 			}
 		}
 
 		for (int i = maxScore - 1; i >= 0; i--) {
-
-			if (playerScores[i] > 1) {
+			
+			if (playerScores[i] == 1)
+				break;
+			else if (playerScores[i] > 1) {
 				draw = true;
 				break;
 			}
-
-			else
-				draw = false;
 
 		}
 
@@ -644,5 +643,11 @@ public class Round {
 		System.out.println("");
 		System.out.println(this.LINE_BREAK);
 
+	}
+
+
+public CommunalPile getPile(){
+	
+	return pile;
 	}
 }
