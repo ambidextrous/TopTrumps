@@ -96,9 +96,9 @@ public class Game {
     /**
      * Increments the number of rounds won by a human player by one.
      */
-    public void incrementeCompRoundWins() {
+    public void incrementCompRoundWins() {
         
-        this.numHumanRoundWins++;
+        this.numCompRoundWins++;
     }
 
     /**

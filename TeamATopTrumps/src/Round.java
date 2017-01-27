@@ -40,16 +40,11 @@ public class Round {
 		int userChoseTrump = 0;
 
 		prevTrumpValues = new int[players.length];
-
-		// NOTE: SHOULD THESE VALUES BE INITIALISED TO 0 IN THE CONSTRUCTOR?
-
+		
 		// User player choice or algorithm to select trump for round
 		if (trumpInd == userChoseTrump) {
-
 			this.trumpIndex = getCompTrumpIndex(CurrentDecidingPlayer);
-
 		} else {
-
 			this.trumpIndex = trumpInd;
 		}
 	}
@@ -70,7 +65,6 @@ public class Round {
 		for (int i = 0; i < NUM_ATTRIBUTES; i++) {
 
 			if (topCard.getAttriValAtIndex(i) > highestAttVal) {
-
 				highestAttVal = topCard.getAttriValAtIndex(i);
 				highestAttInd = i;
 			}
@@ -85,32 +79,30 @@ public class Round {
 	 */
 	public void playRound() {
 
-		System.out.println("Player hands pre-round: \n");
-		printPlayerHands();
-
+		System.out.println(LINE_BREAK);
+		cardsInPlay = takeCards();
+		
+		// Print cards of last round played (i.e. top cards) to console
+		printCardsInPlay();
+		printTrumpInfo();
+		
 		int pileSizeAtStart = this.pile.getPileSize();
 
 		this.draw = checkIfDraw();
 
-		Player winner;
+		calculateWinner();
+		
+		distributeCards();
 
-		winner = calculateWinner();
+		int pileSizeAtEnd = this.pile.getPileSize();	
 
-		this.winner = winner;
-
-		Card[] cardsInPlay = takeCards();
-
-		distributeCards(cardsInPlay, winner);
-
-		int pileSizeAtEnd = this.pile.getPileSize();
-
+		System.out.println(LINE_BREAK);
 		System.out.println("Player hands post-round: \n");
 		printPlayerHands();
 
 		if (pileSizeAtStart != pileSizeAtEnd) {
-
 			this.printCardsInCommonPile();
-		}
+		}		
 	}
 
 	/**
@@ -143,7 +135,7 @@ public class Round {
 	 * @param winner,
 	 *            Player
 	 */
-	private void distributeCards(Card[] cardsInPlay, Player winner) {
+	private void distributeCards() {
 
 		if (winner == null) {
 
@@ -152,9 +144,7 @@ public class Round {
 			for (int i = 0; i < cardsInPlay.length; i++) {
 
 				Card c = cardsInPlay[i];
-
 				if (c != null) {
-
 					this.pile.giveCard(c);
 				}
 			}
@@ -162,6 +152,7 @@ public class Round {
 			// Give cards in play to winner
 			for (int i = 0; i < cardsInPlay.length; i++) {
 				Card c = cardsInPlay[i];
+				
 				if (c != null) {
 					winner.giveCard(c);
 				}
@@ -174,9 +165,7 @@ public class Round {
 				Card c = pile.getCardAtIndex(i);
 
 				if (c != null) {
-
 					winner.giveCard(c);
-
 				}
 			}
 			pile = new CommunalPile(); // Clear communal pile
@@ -196,10 +185,9 @@ public class Round {
 		for (int i = 0; i < players.length; i++) {
 
 			if (players[i].getHandSize() != 0) {
-
 				Card c = players[i].takeCard();
 				cardsArray[i] = c;
-			}
+				}
 		}
 		return cardsArray;
 	}
@@ -223,24 +211,23 @@ public class Round {
 
 			if (players[i].getHandSize() != 0) {
 
-				Card c = players[i].getCardAtIndex(0);
+			//	Card c = players[i].getCardAtIndex(0);
+				
+				Card c = cardsInPlay[i];
+				
 				int score = c.getAttriValAtIndex(this.trumpIndex);
-				playerScores[score]++;
+				playerScores[score - 1]++;
 			}
 		}
 
 		for (int i = maxScore - 1; i >= 0; i--) {
-
-			if (playerScores[i] > 1) {
+			if (playerScores[i] == 1) {
+				break;
+			} else if (playerScores[i] > 1) {
 				draw = true;
 				break;
 			}
-
-			else
-				draw = false;
-
 		}
-
 		return draw;
 	}
 
@@ -250,30 +237,30 @@ public class Round {
 	 * 
 	 * @return the winning Player
 	 */
-	private Player calculateWinner() {
-
-		Player winningPlayer = null;
-
+	private void calculateWinner() {
+		
 		int topScore = 0;
 
 		for (int i = 0; i < this.players.length; i++) {
 
 			if (players[i].getHandSize() > 0) {
 
-				// Look at player's top card
-				Card c = players[i].getCardAtIndex(0);
+				// Look at players' cards in play
+
+			//	Card c = players[i].viewTopCard();
+			
+				Card c = cardsInPlay[i];
+								
 				int playerScore = c.getAttriValAtIndex(this.trumpIndex);
 
 				if (playerScore == topScore) {
-					winningPlayer = null; // Draw scenario, reset winner to null
+					winner = null; // Draw scenario, reset winner to null
 				} else if (playerScore > topScore) {
 					topScore = playerScore;
-					winningPlayer = players[i];
+					winner = players[i];
 				}
 			}
 		}
-
-		return winningPlayer;
 	}
 
 	/**
@@ -282,7 +269,6 @@ public class Round {
 	 * @return the winner of the Round, Player
 	 */
 	public Player getWinner() {
-
 		return winner;
 	}
 
@@ -319,7 +305,6 @@ public class Round {
 	 * @return whether or not the round was a draw.
 	 */
 	public boolean isDraw() {
-
 		return this.draw;
 	}
 
@@ -399,7 +384,6 @@ public class Round {
 		} else {
 			s += String.format("%s won the previous round%n%n", this.winner.getName());
 		}
-
 		return s;
 	}
 
@@ -420,7 +404,6 @@ public class Round {
 			printWinner();
 
 		} else if (this.boolUserLostGame()) {
-
 			s += String.format("YOU LOST THE GAME!%n%n");
 			printWinner();
 		}
@@ -487,9 +470,6 @@ public class Round {
 				att1Value, att2Value, att3Value, att4Value, att5Value);
 
 		System.out.println(attValString);
-
-		System.out.println("");
-
 	}
 
 	/**
@@ -498,7 +478,7 @@ public class Round {
 	 */
 	private void printDeckAttributeNames() {
 
-		System.out.println("");
+		System.out.println();
 
 		String attribute1Name = this.deck.getAttriNameAtIndex(1);
 		String attribute2Name = this.deck.getAttriNameAtIndex(2);
@@ -520,9 +500,9 @@ public class Round {
 	private void printCardsInCommonPile() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Common Pile:");
-		System.out.println("");
+		System.out.println();
 
 		printDeckAttributeNames();
 
@@ -545,7 +525,6 @@ public class Round {
 			Player p = this.players[i];
 
 			if (p.getHandSize() > 0) {
-
 				printPlayerHand(p);
 			}
 		}
@@ -555,15 +534,14 @@ public class Round {
 	 * Prints information on the Cards in the hand of a given Player to the
 	 * console, calling a method to print the Cards of each Player in turn.
 	 * 
-	 * @param p,
-	 *            a Player
+	 * @param p, a Player
+	 *           
 	 */
 	private void printPlayerHand(Player p) {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Cards in hand belonging to: " + p.getName());
-		System.out.println("");
 
 		printDeckAttributeNames();
 
@@ -571,28 +549,27 @@ public class Round {
 
 			printCard(p.getCardAtIndex(i));
 		}
-
-		System.out.println(this.LINE_BREAK);
+		System.out.println();
 	}
 
 	/**
 	 * Prints the cards in play in the current Round, calling a method to print
 	 * each one in turn.
 	 */
-	private void printCardsInPlay() {
+	public void printCardsInPlay() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("");
-		System.out.println("Cards in Play:");
-		System.out.println("");
+		System.out.println();
+		System.out.println("******** Cards currently in play: ********");
 
 		printDeckAttributeNames();
 
-		for (int i = 0; i < this.cardsInPlay.length; i++) {
-
-			printCard(this.cardsInPlay[i]);
+		for (int i = 0; i < cardsInPlay.length; i++) {
+			if (cardsInPlay[i] != null) {
+				printCard(cardsInPlay[i]);
+			}
 		}
-
+		System.out.println();
 		System.out.println(this.LINE_BREAK);
 	}
 
@@ -603,15 +580,12 @@ public class Round {
 	private void printTrumpInfo() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("");
-		System.out.println("Trump for this round:");
-		System.out.println("");
+		System.out.println("Category selected: " 
+		+ this.deck.getAttriNameAtIndex(trumpIndex));
 
-		System.out.println(this.deck.getAttriNameAtIndex(trumpIndex));
-
-		System.out.println("");
-		System.out.println("Trump scores for this round:");
-		System.out.println("");
+		System.out.println();
+		System.out.println("Corresponding Trump values:");
+		System.out.println();
 
 		for (int i = 0; i < this.players.length; i++) {
 
@@ -620,13 +594,10 @@ public class Round {
 			if (p.getHandSize() > 0) {
 
 				Card c = p.getCardAtIndex(0);
-
-				System.out.println(p.getName() + " trump score:" + " " + c.getAttriValAtIndex(this.trumpIndex) + "\n");
+				System.out.println(p.getName() + ": " + prevTrumpValues[i]);
 			}
 		}
-		System.out.println("");
-
-		System.out.println(this.LINE_BREAK);
+		System.out.println();
 	}
 
 	/**
@@ -635,14 +606,10 @@ public class Round {
 	private void printWinner() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("");
-		System.out.println("The winner of the game is");
-		System.out.println("");
-
-		System.out.println(this.winner.getName());
-
-		System.out.println("");
+		System.out.println();
+		System.out.println("The winner of the game is: " 
+					+ this.winner.getName());
+		System.out.println();
 		System.out.println(this.LINE_BREAK);
-
 	}
 }

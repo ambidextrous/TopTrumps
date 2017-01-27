@@ -99,14 +99,14 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         // Constants
         
         /**
-         * Debugging note:
+         * Debugging note: 
          * 
          * Change the values of this.DECK_FILE_NAME and the corresponding
          * value of this.NUM_CARDS to use a different deck.
          */
         
         // Comment out filename and add another to use a different deck
-        this.DECK_FILE_NAME = "deck.txt";
+        this.DECK_FILE_NAME = "drawdeck.txt";
 
         // Comment out filename and add another to use a different deck
         this.NUM_CARDS = 6;
@@ -116,7 +116,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
         this.LINE_BREAK_STRING = "-------------------------------------"
                 + "----------------------------------"
-                + "--------------------------";
+                + "-----------------------------";
         
         // Variables
         this.numRounds = 0;
@@ -124,7 +124,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         // Previous round display initialised to an empty String
         this.prevRoundString = "";
         
-        // Initialse Model / Controller objects
+        // Initialise Model / Controller objects
                 
         // Initial window set-up
         this.setTitle("Top Trumps");
@@ -133,7 +133,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         this.setVisible(true);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         
-        // Widget set-up
+        /* ****Widget setup**** */
         
         // Meta row
         
@@ -150,7 +150,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
             "4 Players","5 Players"}; // Move to separate method        
         numPlayersComboBox = new JComboBox<String>(numPlayerOptions);
         
-        // Play buttons row
+        /* ****Play buttons row**** */
         
         // Button label
         playButtonLabel = new JLabel("Play round: ");
@@ -181,15 +181,15 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                            JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, 
                            JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
         
-        // Panels
+        /* ****Panels**** */
         
-        // Creates a meta panel and adds widgets 
+        // This block creates a meta panel and adds widgets 
         JPanel metaPan = new JPanel();
         metaPan.add(newGameButton);
         metaPan.add(numPlayersComboBox);
         metaPan.add(showStatsButton);
         
-        // Creates a button panel and adds widgets
+        // Block below creates a button panel and adds widgets
         JPanel buttonPan = new JPanel();
         buttonPan.add(playButtonLabel);
         buttonPan.add(playCompChooseButton);
@@ -199,7 +199,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         buttonPan.add(playAttr4Button);
         buttonPan.add(playAttr5Button);
 
-        // Disable unnecesseary buttons at initialisation
+        // Disable unnecessary buttons at initialisation
         playCompChooseButton.setEnabled(false);
         playAttr1Button.setEnabled(false);
         playAttr2Button.setEnabled(false);
@@ -208,7 +208,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         playAttr5Button.setEnabled(false);
         
         // Set-up text display
-	outputTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
+        outputTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
         outputTextArea.setText("");
         outputTextArea.setEnabled(false);
         Color black = new Color(0, 0, 0);
@@ -231,7 +231,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         // Adds main panel to window
         add(mainPan);
 
-        // Initialses Deck object
+        // Initialise Deck object
         generateDeck();    
         this.DB = new TrumpsDBI();
         
@@ -261,7 +261,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         
         Card[] CardArray = generateCardsArray(deckLineStrings);
         
-        // Create deck. Shuffle when new game is launched
+        // Create deck. Shuffle when new game is launched.
         this.currentDeck = new Deck(CardArray, attri1Name, attri2Name, 
                 attri3Name, attri4Name, attri5Name);
         
@@ -269,7 +269,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
         // and debugging purposes.
         printUnshuffledDeck();
         
-        // Asigns correct names to attribute choice buttons
+        // Assigns correct names to attribute choice buttons
         playAttr1Button.setText(attri1Name);
         playAttr2Button.setText(attri2Name);
         playAttr3Button.setText(attri3Name);
@@ -296,10 +296,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
             FileReader reader = new FileReader(this.DECK_FILE_NAME);
             Scanner in = new Scanner(reader);
             
-            for (int i = 0; i < arrayLength; i++) {
-                
+            for (int i = 0; i < arrayLength; i++) {            
                 linesArray[i] = in.nextLine();
-            }            
+            }
+            in.close();       // Close scanner object
         } catch (IOException e ) {
             
             System.err.println("Exception: "+e.getMessage());        
@@ -356,7 +356,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
      * chosen by user, 0 if computer choice.
      */
     private void playRound(int trumpIndex) {
-        
+    	
         Round CurrRound = new Round(currentPlayers, decidingPlayer, 
                 currentPile, trumpIndex, currentDeck, LINE_BREAK_STRING, 
                 NUM_CARDS);
@@ -480,7 +480,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
             
         } else {
             
-            this.currentGame.incrementeCompRoundWins();
+            this.currentGame.incrementCompRoundWins();
         }
         
         this.currentGame.incrementNumRounds();
@@ -738,13 +738,13 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
             Player P = currentPlayers[i];
             
             System.out.println(LINE_BREAK_STRING);
-            System.out.println("");
-            System.out.println("Cards belonging to "+P.getName()+":");
-            System.out.println("");
+            System.out.println();
+            System.out.println("Cards dealt to: " + P.getName());
 
             printDeckAttributeNames();
             printPlayerHand(P);
             
+            System.out.println();
             System.out.println(LINE_BREAK_STRING);            
         }
     } 
@@ -770,9 +770,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
     private void printUnshuffledDeck() {
         
         System.out.println(LINE_BREAK_STRING);
-        System.out.println("");
+        System.out.println();
         System.out.println("Unshuffled deck:");
-        System.out.println("");
         printDeck();
         System.out.println(LINE_BREAK_STRING);
     }    
@@ -784,9 +783,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
     private void printShuffledDeck() {
         
         System.out.println(LINE_BREAK_STRING);
-        System.out.println("");
+        System.out.println();
         System.out.println("Shuffled deck:");
-        System.out.println("");
         printDeck();
         System.out.println(LINE_BREAK_STRING);
     }
@@ -833,10 +831,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                 att1Value, att2Value, att3Value, att4Value, att5Value);
 
         System.out.println(attValString);
-
-        System.out.println("");        
-        
-    }
+        }
     
     /**
      * Prints a formatted String representation of the current Deck to the 
@@ -942,7 +937,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
                 String.valueOf(numPlayersComboBox.getSelectedItem());
         String[] numPlayersArray = numPlayersString.split(" ");
         int numPlayers = Integer.parseInt(numPlayersArray[0]);
-        System.out.println(numPlayers);
         return numPlayers;
     }
 }
