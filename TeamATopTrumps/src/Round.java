@@ -96,12 +96,6 @@ public class Round {
 
 		int pileSizeAtEnd = this.pile.getPileSize();
 
-		cardsInPlay = takeCards();
-
-		distributeCards();
-
-		int pileSizeAtEnd = this.pile.getPileSize();
-
 		System.out.println(LINE_BREAK);
 		System.out.println("Player hands post-round: \n");
 		printPlayerHands();

@@ -1,4 +1,45 @@
-  int[] savedValues;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.Random;
+import java.util.Scanner;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JFrame;
+import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.border.TitledBorder;
+
+import javafx.scene.layout.Border;
+
+import javax.swing.JTable;
+
+/**
+ *
+ * Program: a Top Trumps game featuring a GUI and a database connection to store
+ * data.
+ * 
+ * Class: GUI class for user interaction and for launching model-controller
+ * classes.
+ * 
+ * @author Team A Faisal Ahsan 2242114a Aidan Butler 2281611b Stewart Brown
+ *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
+ */
+public class TopTrumpsGUI extends JFrame implements ActionListener {
+	
+	int[] savedValues;
 
 	// Constants
 	private final String DECK_FILE_NAME;
@@ -332,6 +373,7 @@
 
 				linesArray[i] = in.nextLine();
 			}
+			in.close();
 		} catch (IOException e) {
 
 			System.err.println("Exception: " + e.getMessage());
@@ -508,7 +550,7 @@
 
 		} else {
 
-			this.currentGame.incrementeCompRoundWins();
+			this.currentGame.incrementCompRoundWins();
 		}
 
 		this.currentGame.incrementNumRounds();
@@ -986,4 +1028,3 @@
 		userAttributes.setBackground(new Color(255, 178, 102));
 	}
 }
->>>>>>> a6a82f1e787ab206318b116e6d7384a4ba3468c3
