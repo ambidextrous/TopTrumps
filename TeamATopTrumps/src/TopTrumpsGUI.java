@@ -119,8 +119,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.NUM_ATTRIBUTES = 5;
 		this.USER_NAME = "You";
 
-		this.LINE_BREAK_STRING = "-------------------------------------" + "----------------------------------"
-				+ "--------------------------";
+		this.LINE_BREAK_STRING = "-------------------------------------" 
+		                       + "-------------------------------------"
+				               + "--------------------------";
 
 		// Variables
 		this.numRounds = 0;
@@ -805,13 +806,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 			System.out.println(LINE_BREAK_STRING);
 			System.out.println("");
-			System.out.println("Cards belonging to " + P.getName() + ":");
-			System.out.println("");
+			System.out.println("Cards belonging to: " + P.getName());
 
 			printDeckAttributeNames();
 			printPlayerHand(P);
-
-			System.out.println(LINE_BREAK_STRING);
 		}
 	}
 
@@ -828,6 +826,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 			printCard(p.getCardAtIndex(i));
 		}
+		System.out.println();
 	}
 
 	/**
@@ -837,9 +836,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void printUnshuffledDeck() {
 
 		System.out.println(LINE_BREAK_STRING);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Unshuffled deck:");
-		System.out.println("");
+		System.out.println();
 		printDeck();
 		System.out.println(LINE_BREAK_STRING);
 	}
@@ -851,9 +850,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void printShuffledDeck() {
 
 		System.out.println(LINE_BREAK_STRING);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Shuffled deck:");
-		System.out.println("");
+		System.out.println();
 		printDeck();
 		System.out.println(LINE_BREAK_STRING);
 	}
@@ -864,7 +863,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void printDeckAttributeNames() {
 
-		System.out.println("");
+		System.out.println();
 
 		String attribute1Name = currentDeck.getAttriNameAtIndex(1);
 		String attribute2Name = currentDeck.getAttriNameAtIndex(2);
@@ -897,9 +896,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 				att1Value, att2Value, att3Value, att4Value, att5Value);
 
 		System.out.println(attValString);
-
-		System.out.println("");
-
 	}
 
 	/**
@@ -916,9 +912,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			printCard(CurrentCard);
 
 		}
-
-		System.out.println("");
-
+		System.out.println();
 	}
 
 	/**
@@ -1004,7 +998,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		String numPlayersString = String.valueOf(numPlayersComboBox.getSelectedItem());
 		String[] numPlayersArray = numPlayersString.split(" ");
 		int numPlayers = Integer.parseInt(numPlayersArray[0]);
-		System.out.println(numPlayers);
 		return numPlayers;
 	}
 
