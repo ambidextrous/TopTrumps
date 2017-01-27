@@ -2,16 +2,16 @@
  *
  * Program: a Top Trumps game featuring a GUI and a database connection to store
  * data.
- * 
+ *
  * Class: represents a Round of Top Trumps, in which cards are played and d
  * distributed to the winner in the case of a win or added to the CommunalPile
  * in the case of a draw.
- * 
+ *
  * @author Team A
- *  Faisal Ahsan 2242114a 
- *  Aidan Butler 2281611b 
- *  Stewart Brown 2276998b 
- *  Jane Kennedy 2287767k 
+ *  Faisal Ahsan 2242114a
+ *  Aidan Butler 2281611b
+ *  Stewart Brown 2276998b
+ *  Jane Kennedy 2287767k
  *  Svetoslava Nikolova 1004630n
  */
 public class Round {
@@ -40,7 +40,7 @@ public class Round {
 		int userChoseTrump = 0;
 
 		prevTrumpValues = new int[players.length];
-		
+
 		// User player choice or algorithm to select trump for round
 		if (trumpInd == userChoseTrump) {
 			this.trumpIndex = getCompTrumpIndex(CurrentDecidingPlayer);
@@ -52,7 +52,7 @@ public class Round {
 	/**
 	 * AI method to have the computer player whose turn it is choose to play the
 	 * highest valued attribute on their card.
-	 * 
+	 *
 	 * @return the index of the computer Card attribute with the highest value
 	 */
 	private int getCompTrumpIndex(Player DecidingP) {
@@ -81,20 +81,26 @@ public class Round {
 
 		System.out.println(LINE_BREAK);
 		cardsInPlay = takeCards();
-		
+
 		// Print cards of last round played (i.e. top cards) to console
 		printCardsInPlay();
 		printTrumpInfo();
-		
+
 		int pileSizeAtStart = this.pile.getPileSize();
 
 		this.draw = checkIfDraw();
 
 		calculateWinner();
-		
+
 		distributeCards();
 
-		int pileSizeAtEnd = this.pile.getPileSize();	
+		int pileSizeAtEnd = this.pile.getPileSize();
+
+		cardsInPlay = takeCards();
+
+		distributeCards();
+
+		int pileSizeAtEnd = this.pile.getPileSize();
 
 		System.out.println(LINE_BREAK);
 		System.out.println("Player hands post-round: \n");
@@ -102,7 +108,7 @@ public class Round {
 
 		if (pileSizeAtStart != pileSizeAtEnd) {
 			this.printCardsInCommonPile();
-		}		
+		}
 	}
 
 	/**
@@ -129,7 +135,7 @@ public class Round {
 	 * Distributes Card: in the case of a win, all Cards in the CommunalPile go
 	 * to the winner as do all of the cards in play; in the case of a draw all
 	 * cards in play go to the communal pile
-	 * 
+	 *
 	 * @param cardsInPlay,
 	 *            Card[]
 	 * @param winner,
@@ -152,7 +158,7 @@ public class Round {
 			// Give cards in play to winner
 			for (int i = 0; i < cardsInPlay.length; i++) {
 				Card c = cardsInPlay[i];
-				
+
 				if (c != null) {
 					winner.giveCard(c);
 				}
@@ -168,14 +174,14 @@ public class Round {
 					winner.giveCard(c);
 				}
 			}
-			pile = new CommunalPile(); // Clear communal pile
+			pile = new CommunalPile();
 		}
 	}
 
 	/**
 	 * Takes the top Card from each Player's hand, provided that they have at
 	 * least one card.
-	 * 
+	 *
 	 * @return the taken Cards, Card[]
 	 */
 	private Card[] takeCards() {
@@ -197,7 +203,7 @@ public class Round {
 	 * increments each element if it for each player that has that score for
 	 * their trump; returns whether the highest number in that array is greater
 	 * than 1.
-	 * 
+	 *
 	 * @return whether the round was a draw, boolean
 	 */
 	private boolean checkIfDraw() {
@@ -212,9 +218,9 @@ public class Round {
 			if (players[i].getHandSize() != 0) {
 
 			//	Card c = players[i].getCardAtIndex(0);
-				
+
 				Card c = cardsInPlay[i];
-				
+
 				int score = c.getAttriValAtIndex(this.trumpIndex);
 				playerScores[score - 1]++;
 			}
@@ -234,11 +240,11 @@ public class Round {
 	/**
 	 * Returns the Player with the highest score for the trump of the given
 	 * round.
-	 * 
+	 *
 	 * @return the winning Player
 	 */
 	private void calculateWinner() {
-		
+
 		int topScore = 0;
 
 		for (int i = 0; i < this.players.length; i++) {
@@ -248,9 +254,9 @@ public class Round {
 				// Look at players' cards in play
 
 			//	Card c = players[i].viewTopCard();
-			
+
 				Card c = cardsInPlay[i];
-								
+
 				int playerScore = c.getAttriValAtIndex(this.trumpIndex);
 
 				if (playerScore == topScore) {
@@ -265,7 +271,7 @@ public class Round {
 
 	/**
 	 * Returns the Player who won the round.
-	 * 
+	 *
 	 * @return the winner of the Round, Player
 	 */
 	public Player getWinner() {
@@ -275,7 +281,7 @@ public class Round {
 	/**
 	 * Returns whether the user has won the game (has all of the cards in the
 	 * pack).
-	 * 
+	 *
 	 * @return whether user won game (has all the cards), boolean
 	 */
 	public boolean boolUserWonGame() {
@@ -288,7 +294,7 @@ public class Round {
 
 	/**
 	 * Returns whether the user has lost the game (has no cards).
-	 * 
+	 *
 	 * @return whether user lost game (has no cards), boolean
 	 */
 	public boolean boolUserLostGame() {
@@ -301,7 +307,7 @@ public class Round {
 
 	/**
 	 * Returns whether or not the round was a draw.
-	 * 
+	 *
 	 * @return whether or not the round was a draw.
 	 */
 	public boolean isDraw() {
@@ -313,7 +319,7 @@ public class Round {
 	 * including its trump, scores, if it resulted in a won or lost game,
 	 * whether it resulted in a draw, the cards each player has left and the
 	 * size of the communal pile.
-	 * 
+	 *
 	 * @return formatted String giving containing Round information
 	 */
 	public String getRoundString() {
@@ -333,7 +339,7 @@ public class Round {
 	/**
 	 * Generates and returns a formatted String indicating the number of Cards
 	 * in the CommunalPile.
-	 * 
+	 *
 	 * @return formatted String indicating size of CommunalPile
 	 */
 	private String getCommunalPileString() {
@@ -347,7 +353,7 @@ public class Round {
 	/**
 	 * Generates and returns a formatted String indicating the Cards each Player
 	 * has left.
-	 * 
+	 *
 	 * @return formatted String indicating cards each player has left
 	 */
 	private String getPlayerCardsLeftString() {
@@ -372,7 +378,7 @@ public class Round {
 	/**
 	 * Generates and returns a formatted String indicating either the identity
 	 * of the winner or the round, or the fact that it was a draw.
-	 * 
+	 *
 	 * @return formatted String indicating whether round won or drawn
 	 */
 	private String getWinnerDrawString() {
@@ -390,7 +396,7 @@ public class Round {
 	/**
 	 * If user won or lost game during round, generates and returns a formatted
 	 * String indicating that.
-	 * 
+	 *
 	 * @return a formatted String indicating if the user won or lost the game,
 	 *         or an empty String
 	 */
@@ -414,7 +420,7 @@ public class Round {
 	/**
 	 * Generates and returns a formatted String indicating the trump scores of
 	 * the players participating in the round.
-	 * 
+	 *
 	 * @return formatted String indicating player trump scores
 	 */
 	private String getRoundScoresString() {
@@ -440,7 +446,7 @@ public class Round {
 	/**
 	 * Generates and returns a formatted String indicating the trump of the
 	 * round.
-	 * 
+	 *
 	 * @return formatted String indicating trump of round
 	 */
 	private String getRoundTrumpString() {
@@ -453,7 +459,7 @@ public class Round {
 	/**
 	 * Print a formatted String containing information on a given Card's
 	 * attributes to the console./
-	 * 
+	 *
 	 * @param C,
 	 *            a Card
 	 */
@@ -533,9 +539,9 @@ public class Round {
 	/**
 	 * Prints information on the Cards in the hand of a given Player to the
 	 * console, calling a method to print the Cards of each Player in turn.
-	 * 
+	 *
 	 * @param p, a Player
-	 *           
+	 *
 	 */
 	private void printPlayerHand(Player p) {
 
@@ -580,7 +586,7 @@ public class Round {
 	private void printTrumpInfo() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("Category selected: " 
+		System.out.println("Category selected: "
 		+ this.deck.getAttriNameAtIndex(trumpIndex));
 
 		System.out.println();
@@ -607,9 +613,15 @@ public class Round {
 
 		System.out.println(this.LINE_BREAK);
 		System.out.println();
-		System.out.println("The winner of the game is: " 
+		System.out.println("The winner of the game is: "
 					+ this.winner.getName());
 		System.out.println();
 		System.out.println(this.LINE_BREAK);
+	}
+
+
+public CommunalPile getPile(){
+
+	return pile;
 	}
 }
