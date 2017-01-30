@@ -98,6 +98,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	// Display area widgets
 	private JTextArea outputTextArea;
 	private JScrollPane outputScrollPane;
+	
+	private StatsReport statsReport;
 
 	public TopTrumpsGUI() throws HeadlessException {
 
@@ -296,6 +298,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// Initialses Deck object
 		generateDeck();
 		this.DB = new TrumpsDBI();
+		statsReport = new StatsReport();
 
 		// Refresh screen
 		this.repaint();
@@ -592,9 +595,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	public void displayStatsReport() {
 
-		StatsReport SR = new StatsReport();
-		SR.buildReport(this.DB);
-		SR.setVisible(true);
+		statsReport.buildReport(this.DB);
+		statsReport.setVisible(true);
 	}
 
 	/**
@@ -776,6 +778,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		// Call methods to generate and display new game.
 
+		
+		
 		disableMetaButtons();
 		generateNewGame();
 		generatePlayers();
