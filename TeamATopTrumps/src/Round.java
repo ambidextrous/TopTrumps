@@ -7,12 +7,8 @@
  * distributed to the winner in the case of a win or added to the CommunalPile
  * in the case of a draw.
  *
- * @author Team A
- *  Faisal Ahsan 2242114a
- *  Aidan Butler 2281611b
- *  Stewart Brown 2276998b
- *  Jane Kennedy 2287767k
- *  Svetoslava Nikolova 1004630n
+ * @author Team A Faisal Ahsan 2242114a Aidan Butler 2281611b Stewart Brown
+ *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
  */
 public class Round {
 	private final int NUM_ATTRIBUTES;
@@ -186,7 +182,7 @@ public class Round {
 			if (players[i].getHandSize() != 0) {
 				Card c = players[i].takeCard();
 				cardsArray[i] = c;
-				}
+			}
 		}
 		return cardsArray;
 	}
@@ -210,7 +206,7 @@ public class Round {
 
 			if (players[i].getHandSize() != 0) {
 
-			//	Card c = players[i].getCardAtIndex(0);
+				// Card c = players[i].getCardAtIndex(0);
 
 				Card c = cardsInPlay[i];
 
@@ -239,17 +235,17 @@ public class Round {
 	private void calculateWinner() {
 
 		int topScore = 0;
+		// int playerCardsInPlay = 1;
 
 		for (int i = 0; i < this.players.length; i++) {
 
-			if (players[i].getHandSize() > 0) {
+			if (players[i].getHandSize() + 1 > 0) {
 
 				// Look at players' cards in play
 
-			//	Card c = players[i].viewTopCard();
-
+				// Card c = players[i].viewTopCard();
+				try{
 				Card c = cardsInPlay[i];
-
 				int playerScore = c.getAttriValAtIndex(this.trumpIndex);
 
 				if (playerScore == topScore) {
@@ -258,6 +254,13 @@ public class Round {
 					topScore = playerScore;
 					winner = players[i];
 				}
+				}catch (Exception e){
+					System.out.println(""+players[i]+" has no cards left.");
+				}
+				
+
+
+				
 			}
 		}
 	}
@@ -506,7 +509,8 @@ public class Round {
 	 * Prints information on the Cards in the hand of a given Player to the
 	 * console, calling a method to print the Cards of each Player in turn.
 	 *
-	 * @param p, a Player
+	 * @param p,
+	 *            a Player
 	 *
 	 */
 	private void printPlayerHand(Player p) {
@@ -552,8 +556,7 @@ public class Round {
 	private void printTrumpInfo() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("Category selected: "
-		+ this.deck.getAttriNameAtIndex(trumpIndex));
+		System.out.println("Category selected: " + this.deck.getAttriNameAtIndex(trumpIndex));
 
 		System.out.println();
 		System.out.println("Corresponding Trump values:");
@@ -579,15 +582,13 @@ public class Round {
 
 		System.out.println(this.LINE_BREAK);
 		System.out.println();
-		System.out.println("The winner of the game is: "
-					+ this.winner.getName());
+		System.out.println("The winner of the game is: " + this.winner.getName());
 		System.out.println();
 		System.out.println(this.LINE_BREAK);
 	}
 
+	public CommunalPile getPile() {
 
-public CommunalPile getPile(){
-
-	return pile;
+		return pile;
 	}
 }
