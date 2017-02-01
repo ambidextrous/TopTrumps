@@ -38,8 +38,6 @@ import javax.swing.JTable;
  *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
-	
-	int[] savedValues;
 
 	// Constants
 	private final String DECK_FILE_NAME;
@@ -438,7 +436,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		this.currentRound = CurrRound;
 
-		savedValues = this.currentRound.saveTrumpValues();
+		// Call method in Round class to save Trump values
+		this.currentRound.saveTrumpValues();
 
 		this.currentRound.playRound();
 		currentPile = currentRound.getPile(); // Update communal pile from round just played
@@ -545,18 +544,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void updateGameInfo() {
 
 		if (this.currentRound.isDraw()) {
-
 			this.currentGame.incrementNumDraws();
-
-		} else if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
-
-			this.currentGame.incrementHumanRoundWins();
-
-		} else {
-
-			this.currentGame.incrementCompRoundWins();
 		}
-
 		this.currentGame.incrementNumRounds();
 	}
 
@@ -567,7 +556,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void resetDecidingPlayer() {
 
 		// If the current round is not a draw
-		if (!this.currentRound.isDraw()) {
+		if (! this.currentRound.isDraw()) {
 
 			this.decidingPlayer = this.currentRound.getWinner();
 		}
