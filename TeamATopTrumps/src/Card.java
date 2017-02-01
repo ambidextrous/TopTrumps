@@ -1,5 +1,5 @@
-/*
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+/**
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: represents a top trumps card, with a description and five attribute 
@@ -14,6 +14,7 @@
  */
 public class Card {
     
+	// Instance variables
     private final String nameVal;
     private final int attri1Val;
     private final int attri2Val;
@@ -21,6 +22,7 @@ public class Card {
     private final int attri4Val;
     private final int attri5Val;
 
+    // Constructor
     public Card(String name, int attri1, int attri2, int attri3, 
             int attri4, int attri5) {
         

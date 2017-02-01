@@ -17,10 +17,12 @@
  */
 public class Game {
     
+	// Instance variables
     private int numDraws;
     private int numRounds;
     private boolean humanGameWinner;
 
+    // Constructor
     public Game() {
         
         this.numDraws = 0;

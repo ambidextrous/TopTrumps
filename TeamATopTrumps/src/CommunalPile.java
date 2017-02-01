@@ -1,5 +1,5 @@
-/*
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+/**
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: Represents the communal pile of top trumps cards created when a round 
@@ -13,9 +13,11 @@
  *         Svetoslava Nikolova 1004630n
  */
 public class CommunalPile {
+	
+    // Instance variable to store all cards in communal pile
+    private Card[] cards; 
     
-    private Card[] cards; // All of the cards in the communal pile
-
+    // Constructor 
     public CommunalPile() {
         
         this.cards = new Card[0];
