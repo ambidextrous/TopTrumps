@@ -1,19 +1,3 @@
-
-/*
-java * Programme: a Top Trumps game featuring a GUI and a database connection to 
- * store data.
- * 
- * Class: Produces a statistics report window to describe historical top 
- * trumps game data.
- * 
- * @author Team A
- *         Faisal Ahsan 2242114a 
- *         Aidan Butler 2281611b 
- *         Stewart Brown 2276998b
- *         Jane Kennedy 2287767k 
- *         Svetoslava Nikolova 1004630n
- */
-
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.*;
@@ -27,7 +11,7 @@ import javafx.event.ActionEvent;
 
 
 /**
- * Programme: A programme to load saved gym class and time table information
+ * Program: A program to load saved gym class and time table information
  * from disk, store than information in FitnessProgramme an FitnessClass
  * objects, add or delete gym-classes using a GUI and save info to disk again.
  * 
@@ -37,11 +21,14 @@ public class StatsReport extends JFrame implements ActionListener {
 	/**
 	 * A JFrame extension window to display attendance report.
 	 */
+	
+	// Instance variables
 	private JTextArea textArea;
 	private JButton saveExit, exit;
 	private TrumpsDBI DB;
 	private String displayText;
 
+	// Constructor
 	public StatsReport() {
 
 		this.textArea = new JTextArea();

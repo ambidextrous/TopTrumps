@@ -1,9 +1,7 @@
-
 import java.util.Random;
 
-
-/*
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+/**
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: Represents a full deck top trumps Cards, with its associated
@@ -18,14 +16,15 @@ import java.util.Random;
  */
 public class Deck {
     
+	// Instance variables
     private Card[] cards;
-    
     private final String attri1Name;
     private final String attri2Name;
     private final String attri3Name;
     private final String attri4Name;
     private final String attri5Name;
 
+    // Constructor
     public Deck(Card[] cards, String attri1Name, 
             String attri2Name, String attri3Name, String attri4Name, 
             String attri5Name) {

@@ -3,8 +3,10 @@
  * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
- * Class: represents a game of top trumps, which is composed of multiple rounds
- * and finishes when one player has won all of the cards.
+ * Class: data class which represents attributes of a game of top trumps, 
+ * which is composed of multiple rounds and finishes when one player has won 
+ * all of the cards. Tracks number of rounds and number of draws (within a game)
+ * as well as whether or not the winner of the game was human.
  * 
  * @author Team A
  *         Faisal Ahsan 2242114a 
@@ -15,10 +17,12 @@
  */
 public class Game {
     
+	// Instance variables
     private int numDraws;
     private int numRounds;
     private boolean humanGameWinner;
 
+    // Constructor
     public Game() {
         
         this.numDraws = 0;
@@ -80,7 +84,7 @@ public class Game {
      * @param humanWinner, boolean 
      */
     public void setHumanWinner(boolean humanWinner) {
-        
+    	
         this.humanGameWinner = humanWinner;
     }
     
