@@ -16,12 +16,11 @@ import java.sql.Statement;
  */
 public class TrumpsDBI {
 
-	// Initialise database connection
+	// Instance variable to initialise database connection
 	private static Connection connection = null;
 
-	public TrumpsDBI() {
-
-	}
+	// Default constructor
+	public TrumpsDBI() {}
 
 	/**
 	 * Establishes connect with database and prints output to console indicating

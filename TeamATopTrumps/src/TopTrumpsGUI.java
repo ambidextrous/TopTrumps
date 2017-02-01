@@ -38,42 +38,38 @@ import javax.swing.JTable;
  *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
-
-	// Constants
+	
+	// Instance variables
+	
+	//*****Constants*****
 	private final String DECK_FILE_NAME;
 	private final int NUM_CARDS;
 	private final int NUM_ATTRIBUTES;
 	private final String USER_NAME;
 	private final String LINE_BREAK_STRING;
 
-	// Model and Controller objects
-
-	// Database
-	private TrumpsDBI DB;
-	// A Deck consists of multiple Cards
-	private Deck currentDeck;
-	// A Game consists of multiple Rounds
-	private Game currentGame;
+	//*****Model and Controller objects*****
+	private Deck currentDeck;   // Deck consists of multiple cards
+	private Game currentGame;   // Game consists of multiple rounds
 	private Player[] currentPlayers;
 	private Player decidingPlayer;
 	private CommunalPile currentPile;
-	private Round currentRound;
+	private Round currentRound; // Represents the current round
+
+	//*****Database*****
+	private TrumpsDBI DB;
 
 	// Display variable
 	private String prevRoundString;
 
-	// View widgets
-
-	// Meta row
-
-	// Buttons
+	//*****View widgets*****
+	
+	// Meta row Buttons
 	private JButton newGameButton;
 	private JButton showStatsButton;
 
 	// Combo-box
 	private JComboBox<String> numPlayersComboBox;
-
-	// Play buttons row
 
 	// Play button label
 	private JLabel playButtonLabel, communalPileLabel;
@@ -94,10 +90,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 	// Display area widgets
 	private JTextArea outputTextArea;
-	
 
 	private StatsReport statsReport;
 
+	// Constructor
 	public TopTrumpsGUI() throws HeadlessException {
 
 		// Constants
@@ -133,9 +129,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		// Widget set-up
-
-		// Meta row
+		//*****Widget set-up*****
 
 		// Meta buttons
 		newGameButton = new JButton("New Game");
@@ -145,11 +139,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		newGameButton.addActionListener(this);
 		showStatsButton.addActionListener(this);
 
-		// Combo box
-		String[] numPlayerOptions = { "2 Players", "3 Players", "4 Players", "5 Players" }; // Move
-																							// to
-																							// separate
-																							// method
+		// Setup Combo box with allowable number of players
+		String[] numPlayerOptions = { "2 Players", "3 Players", "4 Players", "5 Players" }; 
+																							
 		numPlayersComboBox = new JComboBox<String>(numPlayerOptions);
 
 		// Button label
@@ -175,11 +167,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		playAttr4Button.addActionListener(this);
 		playAttr5Button.addActionListener(this);
 
-		// Output widgets
+		//*****Output widgets*****
 
-
-		// setting up the players' text areas
-
+		// Setting up the players' text areas
 		player1 = new JTextArea();
 		player1.setBorder(playerBorder("WatsonBot"));
 		player1.setBackground(new Color(255, 255, 255));
@@ -213,7 +203,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		userAttributes.setBackground(new Color(255, 255, 255));
 		userAttributes.setPreferredSize(new Dimension(450, 70));
 
-		// Panels
+		//*****Panels*****
 
 		// Creates a meta panel and adds widgets
 		JPanel metaPan = new JPanel();
@@ -223,7 +213,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		metaPan.setBackground(new Color(204,204,255));
 
 		// Creates a button panel and adds widgets
-
 		JPanel labelPan = new JPanel();
 		labelPan.add(playButtonLabel);
 		labelPan.setBackground(new Color(204,204,255));
@@ -261,7 +250,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		userPanel.add(userAttributes);
 		userPanel.setBackground(new Color(204,204,255));
 		
-		// Disable unnecesseary buttons at initialisation
+		// Disable unnecessary buttons at initialisation
 		playCompChooseButton.setEnabled(false);
 		playAttr1Button.setEnabled(false);
 		playAttr2Button.setEnabled(false);
@@ -278,7 +267,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 
 		// Creates input panel
-
 		JPanel midPlayersPan = new JPanel(new GridLayout(1, 2));
 		midPlayersPan.add(playerPanelLeft);
 		midPlayersPan.add(playerPanelRight);
@@ -312,8 +300,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// Adds main panel to window
 		add(gamePan);
 
-		// Initialses Deck object
+		// Initialises Deck object
 		generateDeck();
+		
+		// Initialise DB and StatsReport objects. Set latter to be invisible.
 		this.DB = new TrumpsDBI();
 		statsReport = new StatsReport();
 		statsReport.setVisible(false);

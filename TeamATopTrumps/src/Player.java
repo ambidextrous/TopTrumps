@@ -1,5 +1,5 @@
-/*
- * Programme: a Top Trumps game featuring a GUI and a database connection to 
+/**
+ * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
  * 
  * Class: respresents a top trumps player, who can be human (the user) or one
@@ -14,11 +14,12 @@
  */
 public class Player {
     
+	// Instance variables
     private Card[] hand; // All of the cards held by a player
-    private Card currentCard;
     private final String name;
     private boolean stillInGame;
 
+    // Constructor
     public Player(String name) {
         
         this.name = name;
