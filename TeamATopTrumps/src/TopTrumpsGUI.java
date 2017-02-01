@@ -58,7 +58,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private Player decidingPlayer;
 	private CommunalPile currentPile;
 	private Round currentRound;
-	private int numRounds;
 
 	// Display variable
 	private String prevRoundString;
@@ -122,9 +121,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.LINE_BREAK_STRING = "-------------------------------------" 
 		                       + "-------------------------------------"
 				               + "--------------------------";
-
-		// Variables
-		this.numRounds = 0;
 
 		// Previous round display initialised to an empty String
 		this.prevRoundString = "";
@@ -546,6 +542,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		if (this.currentRound.isDraw()) {
 			this.currentGame.incrementNumDraws();
 		}
+		
+		// Call method in Game class to increment
+		// number of rounds.
 		this.currentGame.incrementNumRounds();
 	}
 
@@ -555,7 +554,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void resetDecidingPlayer() {
 
-		// If the current round is not a draw
+		// If the current round is not a draw...
 		if (! this.currentRound.isDraw()) {
 
 			this.decidingPlayer = this.currentRound.getWinner();
