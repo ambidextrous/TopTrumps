@@ -113,7 +113,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.DECK_FILE_NAME = "deck.txt";
 
 		// Comment out filename and add another to use a different deck
-		this.NUM_CARDS = 15;
+		this.NUM_CARDS = 40;
 
 		this.NUM_ATTRIBUTES = 5;
 		this.USER_NAME = "You";
@@ -182,35 +182,35 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		player1 = new JTextArea();
 		player1.setBorder(playerBorder("WatsonBot"));
-		player1.setBackground(new Color(234, 234, 234));
+		player1.setBackground(new Color(255, 255, 255));
 		player1.setText("\n");
 		player1.setEditable(false);
-		player1.setPreferredSize(new Dimension(110, 70));
+		player1.setPreferredSize(new Dimension(130, 70));
 
 		player2 = new JTextArea();
 		player2.setBorder(playerBorder("Amiga64Bot"));
-		player2.setBackground(new Color(234, 234, 234));
+		player2.setBackground(new Color(255, 255, 255));
 		player2.setText("\n");
 		player2.setEditable(false);
-		player2.setPreferredSize(new Dimension(110, 70));
+		player2.setPreferredSize(new Dimension(130, 70));
 
 		player3 = new JTextArea();
 		player3.setBorder(playerBorder("BabbageBot"));
-		player3.setBackground(new Color(234, 234, 234));
+		player3.setBackground(new Color(255, 255, 255));
 		player3.setText("\n");
 		player3.setEditable(false);
-		player3.setPreferredSize(new Dimension(110, 70));
+		player3.setPreferredSize(new Dimension(130, 70));
 
 		player4 = new JTextArea();
 		player4.setBorder(playerBorder("TuringBot"));
-		player4.setBackground(new Color(234, 234, 234));
+		player4.setBackground(new Color(255, 255, 255));
 		player4.setText("\n");
 		player4.setEditable(false);
-		player4.setPreferredSize(new Dimension(110, 70));
+		player4.setPreferredSize(new Dimension(130, 70));
 
 		userAttributes = new JTextArea();
 		userAttributes.setBorder(playerBorder("You"));
-		userAttributes.setBackground(new Color(234, 234, 234));
+		userAttributes.setBackground(new Color(255, 255, 255));
 		userAttributes.setPreferredSize(new Dimension(450, 70));
 
 		// Panels
@@ -273,7 +273,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		outputTextArea = new JTextArea();
 		outputTextArea.setText("");
 		outputTextArea.setBorder(playerBorder("Previous Round Information"));
-		outputTextArea.setPreferredSize(new Dimension(400, 90));
+		outputTextArea.setPreferredSize(new Dimension(480, 90));
 		outputTextArea.setEditable(false);
 
 
@@ -1050,22 +1050,22 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void setPlayersHandSize() {
 
 		if (this.currentPlayers.length == 2) {
-			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
+			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
 		}
 		if (currentPlayers.length == 3) {
-			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
-			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
+			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
 		}
 		if (currentPlayers.length == 4) {
-			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
-			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
-			player3.setText("Cards left in had:\n" + currentPlayers[3].getHandSize());
+			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
+			player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
 		}
 		if (currentPlayers.length == 5) {
-			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
-			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
-			player3.setText("Cards left in had:\n" + currentPlayers[3].getHandSize());
-			player4.setText("Cards left in had:\n" + currentPlayers[4].getHandSize());
+			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
+			player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
+			player4.setText("Cards left in hand:\n" + currentPlayers[4].getHandSize());
 		}
 
 	}
