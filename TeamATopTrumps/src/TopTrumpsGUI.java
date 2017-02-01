@@ -293,7 +293,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		generateDeck();
 		this.DB = new TrumpsDBI();
 		statsReport = new StatsReport();
-
+		statsReport.setVisible(false);
+		
 		// Refresh screen
 		this.repaint();
 		this.revalidate();
@@ -584,7 +585,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	public void displayStatsReport() {
 
 		statsReport.buildReport(this.DB);
-		statsReport.setVisible(true);
+		
 	}
 
 	/**
