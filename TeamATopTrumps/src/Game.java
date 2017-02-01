@@ -17,8 +17,6 @@ public class Game {
     
     private int numDraws;
     private int numRounds;
-    private int numHumanRoundWins;
-    private int numCompRoundWins;
     private boolean humanGameWinner;
 
     public Game() {
@@ -65,41 +63,6 @@ public class Game {
         this.numRounds++;
     }
 
-    /**
-     * Returns the number of rounds won by the user.
-     * 
-     * @return rounds won by user, int
-     */
-    public int getNumHumanRoundWins() {
-
-        return numHumanRoundWins;
-    }
-
-    /**
-     * Increments the number of rounds won by the user by one.
-     */
-    public void incrementHumanRoundWins() {
-        
-        this.numHumanRoundWins++;
-    }
-    
-    /**
-     * Returns the number of rounds won by a computer player.
-     * 
-     * @return rounds won by computer, int
-     */
-    public int getNumCompRoundWins() {
-
-        return numCompRoundWins;
-    }
-    
-    /**
-     * Increments the number of rounds won by a human player by one.
-     */
-    public void incrementCompRoundWins() {
-        
-        this.numCompRoundWins++;
-    }
 
     /**
      * Returns whether the winner of the game is human.

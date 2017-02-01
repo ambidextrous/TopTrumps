@@ -39,8 +39,6 @@ import javax.swing.JTable;
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
 
-	int[] savedValues;
-
 	// Constants
 	private final String DECK_FILE_NAME;
 	private final int NUM_CARDS;
@@ -60,7 +58,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private Player decidingPlayer;
 	private CommunalPile currentPile;
 	private Round currentRound;
-	private int numRounds;
 
 	// Display variable
 	private String prevRoundString;
@@ -123,9 +120,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		this.LINE_BREAK_STRING = "-------------------------------------" + "-------------------------------------"
 				+ "--------------------------";
-
-		// Variables
-		this.numRounds = 0;
 
 		// Previous round display initialised to an empty String
 		this.prevRoundString = "";
@@ -322,7 +316,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		generateDeck();
 		this.DB = new TrumpsDBI();
 		statsReport = new StatsReport();
-
+		statsReport.setVisible(false);
+		
 		// Refresh screen
 		this.repaint();
 		this.revalidate();
@@ -461,7 +456,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		this.currentRound = CurrRound;
 
-		savedValues = this.currentRound.saveTrumpValues();
+		// Call method in Round class to save Trump values
+		this.currentRound.saveTrumpValues();
 
 		this.currentRound.playRound();
 		currentPile = currentRound.getPile(); // Update communal pile from round
@@ -574,18 +570,11 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void updateGameInfo() {
 
 		if (this.currentRound.isDraw()) {
-
 			this.currentGame.incrementNumDraws();
-
-		} else if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
-
-			this.currentGame.incrementHumanRoundWins();
-
-		} else {
-
-			this.currentGame.incrementCompRoundWins();
 		}
-
+		
+		// Call method in Game class to increment
+		// number of rounds.
 		this.currentGame.incrementNumRounds();
 	}
 
@@ -595,8 +584,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void resetDecidingPlayer() {
 
-		// If the current round is not a draw
-		if (!this.currentRound.isDraw()) {
+		// If the current round is not a draw...
+		if (! this.currentRound.isDraw()) {
 
 			this.decidingPlayer = this.currentRound.getWinner();
 		}
@@ -625,7 +614,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	public void displayStatsReport() {
 
 		statsReport.buildReport(this.DB);
-		statsReport.setVisible(true);
+		
 	}
 
 	/**

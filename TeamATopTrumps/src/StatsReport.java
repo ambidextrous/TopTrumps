@@ -102,8 +102,16 @@ public class StatsReport extends JFrame implements ActionListener {
 	public void buildReport(TrumpsDBI DB) {
 
 		// Open database connection.
-		DB.establishDbConnection();
-
+		boolean connected = DB.establishDbConnection();
+		
+		if(!connected) {
+			JOptionPane.showMessageDialog(null, "Connection to database failed");
+			this.setVisible(false);
+		}
+			
+		else {
+		
+		this.setVisible(true); 
 		int numGames = DB.getNumGames();
 		int numHumanW = DB.getNumHumanWins();
 		int numCompW = numGames - numHumanW;
@@ -128,6 +136,8 @@ public class StatsReport extends JFrame implements ActionListener {
 
 		// Print report to screen
 		this.textArea.setText(displayText);
+		
+		}
 
 	}
 

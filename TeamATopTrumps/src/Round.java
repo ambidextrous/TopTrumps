@@ -110,7 +110,7 @@ public class Round {
 	 * previous round.
 	 */
 
-	public int[] saveTrumpValues() {
+	public void saveTrumpValues() {
 
 		Card[] cards = new Card[players.length];
 
@@ -122,7 +122,6 @@ public class Round {
 				prevTrumpValues[i] = cards[i].getAttriValAtIndex(trumpIndex);
 			}
 		}
-		return prevTrumpValues;
 	}
 
 	/**
