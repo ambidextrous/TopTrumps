@@ -76,27 +76,24 @@ public class Round {
 	public void playRound() {
 
 		System.out.println(LINE_BREAK);
-		cardsInPlay = takeCards();
 
-		// Print cards of last round played (i.e. top cards) to console
-		printCardsInPlay();
-		printTrumpInfo();
+		// Takes top cards from players' hands into play
+		cardsInPlay = takeCards(); 
 
-		int pileSizeAtStart = this.pile.getPileSize();
+		printCardsInPlay();        // Print cards in play to console
+		printTrumpInfo();		   // Print trump info to console
+		this.draw = checkIfDraw(); // Check if round was a draw
+		calculateWinner(); 		   // Calculate winner of round
 
-		this.draw = checkIfDraw();
-
-		calculateWinner();
-
+		// Redistribute cards according to which player won the round
 		distributeCards();
-
-		int pileSizeAtEnd = this.pile.getPileSize();
 
 		System.out.println(LINE_BREAK);
 		System.out.println("Player hands post-round: \n");
-		printPlayerHands();
+		printPlayerHands();  	   // Print player hands post round
 
-		if (pileSizeAtStart != pileSizeAtEnd) {
+		// If communal pile now has cards, print in console
+		if (this.pile.getPileSize() > 0) {
 			this.printCardsInCommonPile();
 		}
 	}
@@ -135,7 +132,6 @@ public class Round {
 		if (winner == null) {
 
 			// Add cards to CommunalPile
-
 			for (int i = 0; i < cardsInPlay.length; i++) {
 
 				Card c = cardsInPlay[i];
@@ -144,7 +140,8 @@ public class Round {
 				}
 			}
 		} else {
-			// Give cards in play to winner
+			
+			// Give cards in play to winner			
 			for (int i = 0; i < cardsInPlay.length; i++) {
 				Card c = cardsInPlay[i];
 
@@ -153,8 +150,7 @@ public class Round {
 				}
 			}
 
-			// Give cards in pile to winner
-
+			// Give cards in communal pile to winner
 			for (int i = 0; i < pile.getPileSize(); i++) {
 
 				Card c = pile.getCardAtIndex(i);
@@ -205,9 +201,7 @@ public class Round {
 		for (int i = 0; i < players.length; i++) {
 
 			if (players[i].getHandSize() != 0) {
-
-				// Card c = players[i].getCardAtIndex(0);
-
+				
 				Card c = cardsInPlay[i];
 
 				int score = c.getAttriValAtIndex(this.trumpIndex);
@@ -235,15 +229,15 @@ public class Round {
 	private void calculateWinner() {
 
 		int topScore = 0;
-		// int playerCardsInPlay = 1;
+		
+		// Represents the cards a player has in play - always 1.
+		final int playerCardsInPlay = 1;
 
 		for (int i = 0; i < this.players.length; i++) {
 
-			if (players[i].getHandSize() + 1 > 0) {
+			if ((players[i].getHandSize() + playerCardsInPlay) > 0) {
 
 				// Look at players' cards in play
-
-				// Card c = players[i].viewTopCard();
 				try{
 				Card c = cardsInPlay[i];
 				int playerScore = c.getAttriValAtIndex(this.trumpIndex);
@@ -254,13 +248,9 @@ public class Round {
 					topScore = playerScore;
 					winner = players[i];
 				}
-				}catch (Exception e){
-					System.out.println(""+players[i]+" has no cards left.");
-				}
-				
-
-
-				
+				} catch (Exception e){
+					System.out.println("" + players[i] + " has no cards left.");
+				}				
 			}
 		}
 	}
@@ -281,10 +271,11 @@ public class Round {
 	 * @return whether user won game (has all the cards), boolean
 	 */
 	public boolean boolUserWonGame() {
-
+		
 		int playerIndex = 0;
 		Player user = this.players[playerIndex];
 
+		// Evaluates to true if user's hand size == # cards in deck		
 		return user.getHandSize() == this.deck.getDeckLength();
 	}
 
@@ -298,6 +289,7 @@ public class Round {
 		int playerIndex = 0;
 		Player user = this.players[playerIndex];
 
+		// Evaluates to true if user's hand size is 0
 		return user.getHandSize() == 0;
 	}
 
@@ -482,7 +474,6 @@ public class Round {
 		printDeckAttributeNames();
 
 		for (int i = 0; i < this.pile.getPileSize(); i++) {
-
 			printCard(this.pile.getCardAtIndex(i));
 		}
 
@@ -588,7 +579,6 @@ public class Round {
 	}
 
 	public CommunalPile getPile() {
-
 		return pile;
 	}
 }

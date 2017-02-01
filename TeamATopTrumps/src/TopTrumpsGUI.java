@@ -41,29 +41,27 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	
 	// Instance variables
 	
-	//*****Constants*****
+	//----------Constants----------
 	private final String DECK_FILE_NAME;
 	private final int NUM_CARDS;
-	private final int NUM_ATTRIBUTES;
 	private final String USER_NAME;
 	private final String LINE_BREAK_STRING;
 
-	//*****Model and Controller objects*****
-	private Deck currentDeck;   // Deck consists of multiple cards
-	private Game currentGame;   // Game consists of multiple rounds
-	private Player[] currentPlayers;
+	//----------Model and Controller objects----------
+	private Deck currentDeck;  		 // Deck consists of multiple cards
+	private Game currentGame;  		 // Game consists of multiple rounds
+	private Round currentRound;		 // Represents the current round
+	private Player[] currentPlayers; // Array storing current players
 	private Player decidingPlayer;
 	private CommunalPile currentPile;
-	private Round currentRound; // Represents the current round
 
-	//*****Database*****
+	// Database
 	private TrumpsDBI DB;
 
 	// Display variable
 	private String prevRoundString;
 
-	//*****View widgets*****
-	
+	//----------View widgets----------	
 	// Meta row Buttons
 	private JButton newGameButton;
 	private JButton showStatsButton;
@@ -90,14 +88,14 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 	// Display area widgets
 	private JTextArea outputTextArea;
-
+	
 	private StatsReport statsReport;
 
+	
 	// Constructor
 	public TopTrumpsGUI() throws HeadlessException {
 
-		// Constants
-
+		//----------Constants----------
 		/**
 		 * Debugging note:
 		 *
@@ -110,18 +108,15 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		// Comment out filename and add another to use a different deck
 		this.NUM_CARDS = 40;
-
-		this.NUM_ATTRIBUTES = 5;
 		this.USER_NAME = "You";
-
-		this.LINE_BREAK_STRING = "-------------------------------------" + "-------------------------------------"
-				+ "--------------------------";
+		this.LINE_BREAK_STRING = "-------------------------------------" 
+		                       + "-------------------------------------"
+				               + "--------------------------";
 
 		// Previous round display initialised to an empty String
 		this.prevRoundString = "";
 
-		// Initialse Model / Controller objects
-
+		//----------Initialise Model/Controller objects----------
 		// Initial window set-up
 		this.setTitle("Top Trumps");
 		this.setSize(850, 850);
@@ -129,8 +124,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-		//*****Widget set-up*****
-
+		//----------Widget set-up----------
 		// Meta buttons
 		newGameButton = new JButton("New Game");
 		showStatsButton = new JButton("Show Previous Game Stats");
@@ -167,8 +161,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		playAttr4Button.addActionListener(this);
 		playAttr5Button.addActionListener(this);
 
-		//*****Output widgets*****
-
+		//----------Output widgets----------
 		// Setting up the players' text areas
 		player1 = new JTextArea();
 		player1.setBorder(playerBorder("WatsonBot"));
@@ -203,8 +196,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		userAttributes.setBackground(new Color(255, 255, 255));
 		userAttributes.setPreferredSize(new Dimension(450, 70));
 
-		//*****Panels*****
-
+		//----------Panels----------
 		// Creates a meta panel and adds widgets
 		JPanel metaPan = new JPanel();
 		metaPan.add(newGameButton);
@@ -300,7 +292,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// Adds main panel to window
 		add(gamePan);
 
-		// Initialises Deck object
+		// Initialise Deck object
 		generateDeck();
 		
 		// Initialise DB and StatsReport objects. Set latter to be invisible.
@@ -387,13 +379,12 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			}
 			in.close();
 		} catch (IOException e) {
-
 			System.err.println("Exception: " + e.getMessage());
-			JOptionPane.showMessageDialog(null,
-					" Error reading from file: " + DECK_FILE_NAME + ".\n " + "Error message: " + e.getMessage()
-							+ ". \n This programme will now " + "exit automatically.\n Please ensure a correctly "
-							+ "name and formated\n file is present, then " + "relauch the\n programme to procede.",
-					"Error", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, " Error reading from file: " + DECK_FILE_NAME + ".\n Error message: " 
+											+ e.getMessage() + ". \n This programme will now exit automatically.\n " 
+											+ "Please ensure a correctly named and formatted\n file is present, then " 
+											+ "relauch the\n programme to procede.", "Error", JOptionPane.ERROR_MESSAGE);
+			
 			System.exit(-1); // System exit with error flag
 		}
 		return linesArray;
@@ -440,33 +431,29 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 *            user, 0 if computer choice.
 	 */
 	private void playRound(int trumpIndex) {
+		
+		Round CurrRound = new Round(currentPlayers, decidingPlayer, currentPile, 
+					                trumpIndex, currentDeck, LINE_BREAK_STRING, 
+					                NUM_CARDS);
 
-		Round CurrRound = new Round(currentPlayers, decidingPlayer, currentPile, trumpIndex, currentDeck,
-				LINE_BREAK_STRING, NUM_CARDS);
-
-		this.currentRound = CurrRound;
-
-		// Call method in Round class to save Trump values
-		this.currentRound.saveTrumpValues();
-
-		this.currentRound.playRound();
-		currentPile = currentRound.getPile(); // Update communal pile from round
-												// just played
-
-		resetDecidingPlayer();
+		this.currentRound = CurrRound;		  // Assigned to instance variable
+		this.currentRound.saveTrumpValues();  // Save previous Trump values
+		this.currentRound.playRound();	      // Play a round within the game	
+		currentPile = currentRound.getPile(); // Update cards in communal pile 
+		resetDecidingPlayer();				  // Determine which player starts
+		
+		// Update GUI
 		this.playButtonLabel.setText(generateCurrentTurnString());
 		this.communalPileLabel.setText(this.currentRound.getCommunalPileString());
-
 		this.prevRoundString = currentRound.getRoundString();
-
 		this.generateAndSetDisplayText();
-
 		setButtonsForNextRound();
 		updateGameInfo();
-		userAttributes.setText(
-				"Current hand: " + currentPlayers[0].getHandSize() + "\nCurrent card: " + generateCurrentCardString());
-		setPlayersHandSize();
-
+		userAttributes.setText("Current hand: " + currentPlayers[0].getHandSize() 
+				           + "\nCurrent card: " + generateCurrentCardString());
+		
+		
+		setPlayersHandSize(); 				  // Update players' hand size post-round
 		checkIfGameOver();
 	}
 
@@ -476,8 +463,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void checkIfGameOver() {
 
+		// Evaluates to true if the game is no longer in progress
 		if (this.currentRound.boolUserWonGame() || this.currentRound.boolUserLostGame()) {
-
 			setGameWinner();
 			displayEndOfGamePopUp();
 			finishGame();
@@ -494,16 +481,14 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		String gameResult = "lost";
 
 		if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
-
 			gameResult = "won";
 		}
 
-		int choice = JOptionPane.showConfirmDialog(null,
-				"Game over, " + "you " + gameResult + "! \nDo you want to save the game " + "information?", "Game Over",
-				JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
+		int choice = JOptionPane.showConfirmDialog(null, "Game over, " + "you " + gameResult 
+				   + "! \nDo you want to save the game " + "information?", "Game Over",
+				     JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 		if (choice == JOptionPane.YES_OPTION) {
-
 			saveGameDataToDB();
 		}
 	}
@@ -524,11 +509,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void setGameWinner() {
 
 		if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
-
 			this.currentGame.setHumanWinner(true);
-
 		} else {
-
 			this.currentGame.setHumanWinner(false);
 		}
 	}
@@ -576,7 +558,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		// If the current round is not a draw...
 		if (! this.currentRound.isDraw()) {
-
 			this.decidingPlayer = this.currentRound.getWinner();
 		}
 	}
@@ -588,11 +569,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void setButtonsForNextRound() {
 
 		if (this.decidingPlayer.getName().equals(this.USER_NAME)) {
-
 			this.setButtonsForUserChoice();
-
 		} else {
-
 			this.setButtonsForComputerChoice();
 		}
 	}
@@ -602,9 +580,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 * previous games played, formats that data and displays it in a new window.
 	 */
 	public void displayStatsReport() {
-
-		statsReport.buildReport(this.DB);
 		
+		statsReport.buildReport(this.DB);
 	}
 
 	/**
@@ -617,35 +594,27 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 
 		if (e.getSource() == newGameButton) {
-
 			startNewGame();
 		}
 		if (e.getSource() == playCompChooseButton) {
-
 			playRound(0);
 		}
 		if (e.getSource() == showStatsButton) {
-
 			displayStatsReport();
 		}
 		if (e.getSource() == playAttr1Button) {
-
 			playRound(1);
 		}
 		if (e.getSource() == playAttr2Button) {
-
 			playRound(2);
 		}
 		if (e.getSource() == playAttr3Button) {
-
 			playRound(3);
 		}
 		if (e.getSource() == playAttr4Button) {
-
 			playRound(4);
 		}
 		if (e.getSource() == playAttr5Button) {
-
 			playRound(5);
 		}
 	}
@@ -661,15 +630,14 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		Player user = this.currentPlayers[0];
 
 		if (user.getHandSize() == 0) {
-
 			String s = String.format(this.USER_NAME + " have no cards left.\n\n");
-
 			return s;
 		}
 
 		Card UserCurrentCard = user.viewTopCard();
-
+		
 		String CardDescription = String.format("%s%n", UserCurrentCard.getNameVal());
+		
 		String CardAttri1 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(1),
 				UserCurrentCard.getAttriValAtIndex(1));
 		String CardAttri2 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(2),
@@ -680,15 +648,16 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 				UserCurrentCard.getAttriValAtIndex(4));
 		String CardAttri5 = String.format("%s: %s     %n%n", currentDeck.getAttriNameAtIndex(5),
 				UserCurrentCard.getAttriValAtIndex(5));
-		String UserCardInfo = CardDescription + CardAttri1 + CardAttri2 + CardAttri3 + CardAttri4 + CardAttri5;
+		
+		String UserCardInfo = CardDescription + CardAttri1 + CardAttri2 
+				            + CardAttri3 + CardAttri4 + CardAttri5;
 
 		return UserCardInfo;
 	}
 
 	private String generateCurrentTurnString() {
-
-		String WhoseTurn = String.format("Current player turn: %s%n%n", this.decidingPlayer.getName());
-
+		String WhoseTurn = String.format("Current player turn: %s%n%n", 
+				           this.decidingPlayer.getName());
 		return WhoseTurn;
 	}
 
@@ -697,9 +666,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 * current and previous rounds of the game.
 	 */
 	private void generateAndSetDisplayText() {
-
 		String displayText = this.prevRoundString;
-
 		this.outputTextArea.setText(displayText);
 	}
 
@@ -710,11 +677,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void setButtonsForRound() {
 
 		if (this.decidingPlayer.getName().equals(this.USER_NAME)) {
-
 			setButtonsForUserChoice();
-
 		} else {
-
 			setButtonsForComputerChoice();
 		}
 	}
@@ -754,7 +718,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 *
 	 */
 	private void generateNewGame() {
-
+		
 		this.currentGame = new Game();
 	}
 
@@ -766,12 +730,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void startNewGame() {
 
-		/*
-		 * Clear text area of previous game information whenever successive
-		 * games are played.
-		 */
-
-		prevRoundString = "";
+		// Clear text area of previous game info
+		prevRoundString = "";		
 
 		/**
 		 * Debugging note:
@@ -779,10 +739,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		 * Comment out the line below to stop the deck from being shuffled,
 		 * useful for testing.
 		 */
-		currentDeck.shuffleDeck();
+		currentDeck.shuffleDeck();		
 
 		// Call methods to generate and display new game.
-
 		disableMetaButtons();
 		generateNewGame();
 		generatePlayers();
@@ -831,7 +790,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void printPlayerHand(Player p) {
 
 		for (int i = 0; i < p.getHandSize(); i++) {
-
 			printCard(p.getCardAtIndex(i));
 		}
 		System.out.println();
@@ -915,7 +873,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		printDeckAttributeNames();
 
 		for (int i = 0; i < NUM_CARDS; i++) {
-
 			Card CurrentCard = currentDeck.getCardAtIndex(i);
 			printCard(CurrentCard);
 
@@ -947,6 +904,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void chooseStartingPlayer() {
 
 		Random rand = new Random();
+		
 		int decidingPlayerIndex = rand.nextInt(currentPlayers.length);
 		this.decidingPlayer = currentPlayers[decidingPlayerIndex];
 	}
@@ -955,7 +913,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 * Generates a new CommunalPile and sets it as an instance variable.
 	 */
 	private void generateCommunalPile() {
-
+		
 		this.currentPile = new CommunalPile();
 	}
 
@@ -1057,6 +1015,5 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
 			player4.setText("Cards left in hand:\n" + currentPlayers[4].getHandSize());
 		}
-
 	}
 }
