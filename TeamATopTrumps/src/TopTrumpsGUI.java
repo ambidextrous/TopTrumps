@@ -38,7 +38,7 @@ import javax.swing.JTable;
  *         2276998b Jane Kennedy 2287767k Svetoslava Nikolova 1004630n
  */
 public class TopTrumpsGUI extends JFrame implements ActionListener {
-	
+
 	int[] savedValues;
 
 	// Constants
@@ -79,7 +79,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	// Play buttons row
 
 	// Play button label
-	private JLabel playButtonLabel;
+	private JLabel playButtonLabel, communalPileLabel;
 
 	// Play button text
 	private String compChooseButText;
@@ -97,8 +97,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 	// Display area widgets
 	private JTextArea outputTextArea;
-	private JScrollPane outputScrollPane;
 	
+
 	private StatsReport statsReport;
 
 	public TopTrumpsGUI() throws HeadlessException {
@@ -121,9 +121,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.NUM_ATTRIBUTES = 5;
 		this.USER_NAME = "You";
 
-		this.LINE_BREAK_STRING = "-------------------------------------" 
-		                       + "-------------------------------------"
-				               + "--------------------------";
+		this.LINE_BREAK_STRING = "-------------------------------------" + "-------------------------------------"
+				+ "--------------------------";
 
 		// Variables
 		this.numRounds = 0;
@@ -135,7 +134,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		// Initial window set-up
 		this.setTitle("Top Trumps");
-		this.setSize(800, 950);
+		this.setSize(850, 850);
 		this.setLocation(300, 100);
 		this.setVisible(true);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -160,10 +159,11 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		numPlayersComboBox = new JComboBox<String>(numPlayerOptions);
 
 		// Button label
-		playButtonLabel = new JLabel("Play round: ");
+		playButtonLabel = new JLabel("");
+		communalPileLabel = new JLabel("");
 
 		// Button text
-		compChooseButText = "Computer's Choice";
+		compChooseButText = "Go!";
 
 		// Play buttons
 		playCompChooseButton = new JButton(compChooseButText);
@@ -182,37 +182,42 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		playAttr5Button.addActionListener(this);
 
 		// Output widgets
-		this.outputTextArea = new JTextArea();
-		this.outputScrollPane = new JScrollPane(outputTextArea, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS,
-				JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
+
 
 		// setting up the players' text areas
 
 		player1 = new JTextArea();
 		player1.setBorder(playerBorder("WatsonBot"));
 		player1.setBackground(new Color(234, 234, 234));
-		player1.setText("\n Cards left in hand: " + "\n 10");
+		player1.setText("\n");
+		player1.setEditable(false);
+		player1.setPreferredSize(new Dimension(110, 70));
 
 		player2 = new JTextArea();
 		player2.setBorder(playerBorder("Amiga64Bot"));
 		player2.setBackground(new Color(234, 234, 234));
-		player2.setText("\n Cards left in hand: \n");
-		player2.setAlignmentY(TOP_ALIGNMENT);
+		player2.setText("\n");
+		player2.setEditable(false);
+		player2.setPreferredSize(new Dimension(110, 70));
 
 		player3 = new JTextArea();
 		player3.setBorder(playerBorder("BabbageBot"));
 		player3.setBackground(new Color(234, 234, 234));
-		player3.setText("\n Cards left in hand: \n");
+		player3.setText("\n");
+		player3.setEditable(false);
+		player3.setPreferredSize(new Dimension(110, 70));
 
 		player4 = new JTextArea();
 		player4.setBorder(playerBorder("TuringBot"));
 		player4.setBackground(new Color(234, 234, 234));
-		player4.setText("\nCards left in hand: \n");
+		player4.setText("\n");
+		player4.setEditable(false);
+		player4.setPreferredSize(new Dimension(110, 70));
 
 		userAttributes = new JTextArea();
 		userAttributes.setBorder(playerBorder("You"));
 		userAttributes.setBackground(new Color(234, 234, 234));
-		userAttributes.setPreferredSize(new Dimension(400, 70));
+		userAttributes.setPreferredSize(new Dimension(450, 70));
 
 		// Panels
 
@@ -221,11 +226,17 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		metaPan.add(newGameButton);
 		metaPan.add(numPlayersComboBox);
 		metaPan.add(showStatsButton);
+		metaPan.setBackground(new Color(204,204,255));
 
 		// Creates a button panel and adds widgets
-		JPanel buttonPan = new JPanel();
-		buttonPan.add(playButtonLabel);
-		buttonPan.add(playCompChooseButton);
+
+		JPanel labelPan = new JPanel();
+		labelPan.add(playButtonLabel);
+		labelPan.setBackground(new Color(204,204,255));
+
+		JPanel goButtonPan = new JPanel();
+		goButtonPan.add(playCompChooseButton);
+		goButtonPan.setBackground(new Color(204,204,255));
 
 		JPanel attributesPanel = new JPanel();
 		attributesPanel.add(playAttr1Button);
@@ -233,21 +244,29 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		attributesPanel.add(playAttr3Button);
 		attributesPanel.add(playAttr4Button);
 		attributesPanel.add(playAttr5Button);
+		attributesPanel.setBackground(new Color(204,204,255));
 
 		JPanel playerPanelTop = new JPanel();
 		playerPanelTop.add(player2);
 		playerPanelTop.add(player3);
+		playerPanelTop.setBackground(new Color(204,204,255));
 
 		JPanel playerPanelLeft = new JPanel();
 		playerPanelLeft.add(player1);
+		playerPanelLeft.setBackground(new Color(204,204,255));
 
 		JPanel playerPanelRight = new JPanel();
 		playerPanelRight.add(player4);
-
+		playerPanelRight.setBackground(new Color(204,204,255));
+		
+		JPanel communalPile = new JPanel();
+		communalPile.add(communalPileLabel);
+		communalPile.setBackground(new Color(204,204,255));
+		
 		JPanel userPanel = new JPanel();
 		userPanel.add(userAttributes);
-
-
+		userPanel.setBackground(new Color(204,204,255));
+		
 		// Disable unnecesseary buttons at initialisation
 		playCompChooseButton.setEnabled(false);
 		playAttr1Button.setEnabled(false);
@@ -257,43 +276,47 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		playAttr5Button.setEnabled(false);
 
 		// Set-up text display
-		outputTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
+		outputTextArea = new JTextArea();
 		outputTextArea.setText("");
-		outputTextArea.setEnabled(false);
-		Color black = new Color(0, 0, 0);
-		outputTextArea.setDisabledTextColor(black);
-
-
-		//Creates middle layout
-
+		outputTextArea.setBorder(playerBorder("Previous Round Information"));
+		outputTextArea.setPreferredSize(new Dimension(400, 90));
+		outputTextArea.setEditable(false);
 
 
 		// Creates input panel
-		GridLayout inputGrid = new GridLayout(6, 1);
-		JPanel inputPan = new JPanel(inputGrid);
 
-		// Adds meta and button panels to input panel
-		inputPan.add(metaPan);
-		inputPan.add(playerPanelTop);
-
-		GridLayout midPlayers = new GridLayout(1, 2);
-		JPanel midPlayersPan = new JPanel (midPlayers);
+		JPanel midPlayersPan = new JPanel(new GridLayout(1, 2));
 		midPlayersPan.add(playerPanelLeft);
 		midPlayersPan.add(playerPanelRight);
+		midPlayersPan.setBackground(new Color(204,204,255));
 
-		inputPan.add(midPlayersPan);
-		inputPan.add(buttonPan);
-		inputPan.add(attributesPanel);
-		inputPan.add(userPanel);
+		JPanel midPan = new JPanel(new GridLayout(2, 1));
+		midPan.add(labelPan);
+		midPan.add(goButtonPan);
+		midPan.setBackground(new Color(204,204,255));
 
-		// Adds sub-panels to main input panel
-		GridLayout mainGridLayout = new GridLayout(2, 1);
-		JPanel mainPan = new JPanel(mainGridLayout);
-		mainPan.add(inputPan);
-		mainPan.add(outputScrollPane);
+		JPanel bottomPan = new JPanel(new GridLayout(2, 1));
+		bottomPan.add(communalPile);
+		bottomPan.add(attributesPanel);
+		bottomPan.setBackground(new Color(204,204,255));
+
+		JPanel textAreaPan = new JPanel();
+		textAreaPan.add(outputTextArea);
+		textAreaPan.setBackground(new Color(204,204,255));
+		
+		JPanel gamePan = new JPanel(new GridLayout(8, 1));
+		gamePan.setBackground(new Color(204,204,255));
+
+		gamePan.add(metaPan);
+		gamePan.add(playerPanelTop);
+		gamePan.add(midPlayersPan);
+		gamePan.add(midPan);
+		gamePan.add(bottomPan);
+		gamePan.add(userPanel);
+		gamePan.add(textAreaPan);
 
 		// Adds main panel to window
-		add(mainPan);
+		add(gamePan);
 
 		// Initialses Deck object
 		generateDeck();
@@ -441,9 +464,12 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		savedValues = this.currentRound.saveTrumpValues();
 
 		this.currentRound.playRound();
-		currentPile = currentRound.getPile(); // Update communal pile from round just played
+		currentPile = currentRound.getPile(); // Update communal pile from round
+												// just played
 
 		resetDecidingPlayer();
+		this.playButtonLabel.setText(generateCurrentTurnString());
+		this.communalPileLabel.setText(this.currentRound.getCommunalPileString());
 
 		this.prevRoundString = currentRound.getRoundString();
 
@@ -451,7 +477,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		setButtonsForNextRound();
 		updateGameInfo();
-		userAttributes.setText("Current hand: "+generateCurrentCardString());
+		userAttributes.setText(
+				"Current hand: " + currentPlayers[0].getHandSize() + "\nCurrent card: " + generateCurrentCardString());
+		setPlayersHandSize();
+
 		checkIfGameOver();
 	}
 
@@ -661,8 +690,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		Card UserCurrentCard = user.viewTopCard();
 
-		String CardDescription = String.format("%s%n",
-				UserCurrentCard.getNameVal());
+		String CardDescription = String.format("%s%n", UserCurrentCard.getNameVal());
 		String CardAttri1 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(1),
 				UserCurrentCard.getAttriValAtIndex(1));
 		String CardAttri2 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(2),
@@ -691,9 +719,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void generateAndSetDisplayText() {
 
-		String displayText = generateCurrentCardString();
-		displayText += generateCurrentTurnString();
-		displayText += this.prevRoundString;
+		String displayText = this.prevRoundString;
 
 		this.outputTextArea.setText(displayText);
 	}
@@ -778,17 +804,16 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		// Call methods to generate and display new game.
 
-		
-		
 		disableMetaButtons();
 		generateNewGame();
 		generatePlayers();
 		setPlayerColours(getNumPlayers());
 		chooseStartingPlayer();
+		this.playButtonLabel.setText(generateCurrentTurnString());
 		generateCommunalPile();
 		dealCards();
 
-		userAttributes.setText("Current hand: "+generateCurrentCardString());
+		this.userAttributes.setText("Current hand: " + generateCurrentCardString());
 
 		setButtonsForRound();
 
@@ -1004,7 +1029,11 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		int numPlayers = Integer.parseInt(numPlayersArray[0]);
 		return numPlayers;
 	}
-
+	
+	/**
+	 * Sets the textAreas of players currently playing in 
+	 * colours
+	 */
 	private void setPlayerColours(int numPlayers) {
 
 		if (numPlayers == 2) {
@@ -1023,5 +1052,32 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			player4.setBackground(new Color(102, 255, 178));
 		}
 		userAttributes.setBackground(new Color(255, 178, 102));
+	}
+
+	/**
+	 * Sets the textAreas of players currently playing with the number of cards
+	 * in hand after each round
+	 */
+	private void setPlayersHandSize() {
+
+		if (this.currentPlayers.length == 2) {
+			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
+		}
+		if (currentPlayers.length == 3) {
+			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
+		}
+		if (currentPlayers.length == 4) {
+			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
+			player3.setText("Cards left in had:\n" + currentPlayers[3].getHandSize());
+		}
+		if (currentPlayers.length == 5) {
+			player1.setText("Cards left in had:\n" + currentPlayers[1].getHandSize());
+			player2.setText("Cards left in had:\n" + currentPlayers[2].getHandSize());
+			player3.setText("Cards left in had:\n" + currentPlayers[3].getHandSize());
+			player4.setText("Cards left in had:\n" + currentPlayers[4].getHandSize());
+		}
+
 	}
 }

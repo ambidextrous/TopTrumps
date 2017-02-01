@@ -324,8 +324,6 @@ public class Round {
 		roundString += getRoundScoresString();
 		roundString += getGameWonLostString();
 		roundString += getWinnerDrawString();
-		roundString += getPlayerCardsLeftString();
-		roundString += getCommunalPileString();
 
 		return roundString;
 	}
@@ -336,35 +334,10 @@ public class Round {
 	 *
 	 * @return formatted String indicating size of CommunalPile
 	 */
-	private String getCommunalPileString() {
+	public String getCommunalPileString() {
 
 		String s = String.format("Cards in common pile:");
 		s += String.format("%d", this.pile.getPileSize());
-
-		return s;
-	}
-
-	/**
-	 * Generates and returns a formatted String indicating the Cards each Player
-	 * has left.
-	 *
-	 * @return formatted String indicating cards each player has left
-	 */
-	private String getPlayerCardsLeftString() {
-
-		String s = String.format("Player cards left:%n");
-
-		for (int i = 0; i < this.players.length; i++) {
-
-			Player p = players[i];
-
-			s += String.format(p.getName());
-			s += String.format(": ");
-			s += String.format("%d", p.getHandSize());
-			s += String.format("   ");
-		}
-
-		s += String.format("%n%n");
 
 		return s;
 	}

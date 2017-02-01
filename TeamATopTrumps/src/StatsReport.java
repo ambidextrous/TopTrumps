@@ -68,14 +68,16 @@ public class StatsReport extends JFrame implements ActionListener {
 
 		// Sets basic window parameters
 		this.setTitle("Historical Game Statistics Report");
-		this.setSize(600, 200);
+		this.setSize(600, 400);
 		this.setLocation(300, 200);
-		this.setVisible(true);
+		this.setVisible(false);
 
 		// Adds textArea
 		
 		GridLayout grid = new GridLayout(2,1);
 		JPanel bigPan = new JPanel(grid);
+		
+
 		
 		bigPan.add(textArea);
 		bigPan.add(pan);
