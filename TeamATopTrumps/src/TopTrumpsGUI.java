@@ -167,34 +167,39 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		player1.setBorder(playerBorder("WatsonBot"));
 		player1.setBackground(new Color(255, 255, 255));
 		player1.setText("\n");
+		player1.setFont(new Font("monospaced", Font.PLAIN, 12));
 		player1.setEditable(false);
-		player1.setPreferredSize(new Dimension(130, 70));
+		player1.setPreferredSize(new Dimension(140, 70));
 
 		player2 = new JTextArea();
 		player2.setBorder(playerBorder("Amiga64Bot"));
 		player2.setBackground(new Color(255, 255, 255));
 		player2.setText("\n");
+		player2.setFont(new Font("monospaced", Font.PLAIN, 12));
 		player2.setEditable(false);
-		player2.setPreferredSize(new Dimension(130, 70));
+		player2.setPreferredSize(new Dimension(140, 70));
 
 		player3 = new JTextArea();
 		player3.setBorder(playerBorder("BabbageBot"));
 		player3.setBackground(new Color(255, 255, 255));
 		player3.setText("\n");
+		player3.setFont(new Font("monospaced", Font.PLAIN, 12));
 		player3.setEditable(false);
-		player3.setPreferredSize(new Dimension(130, 70));
+		player3.setPreferredSize(new Dimension(140, 70));
 
 		player4 = new JTextArea();
 		player4.setBorder(playerBorder("TuringBot"));
 		player4.setBackground(new Color(255, 255, 255));
 		player4.setText("\n");
+		player4.setFont(new Font("monospaced", Font.PLAIN, 12));
 		player4.setEditable(false);
-		player4.setPreferredSize(new Dimension(130, 70));
+		player4.setPreferredSize(new Dimension(140, 70));
 
 		userAttributes = new JTextArea();
 		userAttributes.setBorder(playerBorder("You"));
 		userAttributes.setBackground(new Color(255, 255, 255));
-		userAttributes.setPreferredSize(new Dimension(450, 70));
+		userAttributes.setFont(new Font("monospaced", Font.PLAIN, 12));
+		userAttributes.setPreferredSize(new Dimension(500, 80));
 
 		//----------Panels----------
 		// Creates a meta panel and adds widgets
@@ -254,7 +259,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		outputTextArea = new JTextArea();
 		outputTextArea.setText("");
 		outputTextArea.setBorder(playerBorder("Previous Round Information"));
-		outputTextArea.setPreferredSize(new Dimension(480, 90));
+		outputTextArea.setPreferredSize(new Dimension(550, 90));
+		outputTextArea.setFont(new Font("monospaced", Font.PLAIN, 12));
 		outputTextArea.setEditable(false);
 
 
@@ -449,7 +455,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.generateAndSetDisplayText();
 		setButtonsForNextRound();
 		updateGameInfo();
-		userAttributes.setText("Current hand: " + currentPlayers[0].getHandSize() 
+		userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
 				           + "\nCurrent card: " + generateCurrentCardString());
 		
 		
@@ -638,15 +644,15 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		
 		String CardDescription = String.format("%s%n", UserCurrentCard.getNameVal());
 		
-		String CardAttri1 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(1),
+		String CardAttri1 = String.format("%s: %s   ", currentDeck.getAttriNameAtIndex(1),
 				UserCurrentCard.getAttriValAtIndex(1));
-		String CardAttri2 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(2),
+		String CardAttri2 = String.format("%s: %s   ", currentDeck.getAttriNameAtIndex(2),
 				UserCurrentCard.getAttriValAtIndex(2));
-		String CardAttri3 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(3),
+		String CardAttri3 = String.format("%s: %s   ", currentDeck.getAttriNameAtIndex(3),
 				UserCurrentCard.getAttriValAtIndex(3));
-		String CardAttri4 = String.format("%s: %s     ", currentDeck.getAttriNameAtIndex(4),
+		String CardAttri4 = String.format("%s: %s   ", currentDeck.getAttriNameAtIndex(4),
 				UserCurrentCard.getAttriValAtIndex(4));
-		String CardAttri5 = String.format("%s: %s     %n%n", currentDeck.getAttriNameAtIndex(5),
+		String CardAttri5 = String.format("%s: %s   %n%n", currentDeck.getAttriNameAtIndex(5),
 				UserCurrentCard.getAttriValAtIndex(5));
 		
 		String UserCardInfo = CardDescription + CardAttri1 + CardAttri2 
@@ -751,7 +757,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		generateCommunalPile();
 		dealCards();
 
-		this.userAttributes.setText("Current hand: " + generateCurrentCardString());
+		this.userAttributes.setText("Current card: " + generateCurrentCardString());
 
 		setButtonsForRound();
 
