@@ -33,6 +33,7 @@ public class Round {
 		this.pile = CP;
 		this.winner = null;
 		this.draw = false;
+		this.decidingPlayer=CurrentDecidingPlayer;
 
 		int userChoseTrump = 0;
 
@@ -40,7 +41,7 @@ public class Round {
 
 		// User player choice or algorithm to select trump for round
 		if (trumpInd == userChoseTrump) {
-			this.trumpIndex = getCompTrumpIndex(CurrentDecidingPlayer);
+			this.trumpIndex = getCompTrumpIndex();
 		} else {
 			this.trumpIndex = trumpInd;
 		}
@@ -52,9 +53,10 @@ public class Round {
 	 *
 	 * @return the index of the computer Card attribute with the highest value
 	 */
-	private int getCompTrumpIndex(Player DecidingP) {
+	private int getCompTrumpIndex() {
 
-		Card topCard = DecidingP.viewTopCard();
+		System.out.println(decidingPlayer.getName());
+		Card topCard = decidingPlayer.viewTopCard();
 
 		int highestAttInd = 0;
 		int highestAttVal = 0;
