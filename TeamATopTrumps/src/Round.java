@@ -18,6 +18,7 @@ public class Round {
 	private int trumpIndex;
 	private CommunalPile pile;
 	private Player winner;
+	private Player decidingPlayer;
 	private Deck deck;
 	private boolean draw;
 	private int[] prevTrumpValues;
@@ -122,10 +123,6 @@ public class Round {
 	 * to the winner as do all of the cards in play; in the case of a draw all
 	 * cards in play go to the communal pile
 	 *
-	 * @param cardsInPlay,
-	 *            Card[]
-	 * @param winner,
-	 *            Player
 	 */
 	private void distributeCards() {
 
@@ -200,7 +197,7 @@ public class Round {
 
 		for (int i = 0; i < players.length; i++) {
 
-			if (players[i].getHandSize() != 0) {
+			if (cardsInPlay[i] != null) {
 				
 				Card c = cardsInPlay[i];
 
@@ -276,7 +273,7 @@ public class Round {
 		Player user = this.players[playerIndex];
 
 		// Evaluates to true if user's hand size == # cards in deck		
-		return user.getHandSize() == this.deck.getDeckLength();
+		return user.getHandSize() == this.deck.getDeckLength()-this.pile.getPileSize();
 	}
 
 	/**
@@ -330,7 +327,7 @@ public class Round {
 	 */
 	public String getCommunalPileString() {
 
-		String s = String.format("Cards in common pile:");
+		String s = String.format("Cards in common pile: ");
 		s += String.format("%d", this.pile.getPileSize());
 
 		return s;

@@ -563,7 +563,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void resetDecidingPlayer() {
 
 		// If the current round is not a draw...
-		if (! this.currentRound.isDraw()) {
+		if (!this.currentRound.isDraw()) {
 			this.decidingPlayer = this.currentRound.getWinner();
 		}
 	}
@@ -752,6 +752,11 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		generateNewGame();
 		generatePlayers();
 		setPlayerColours(getNumPlayers());
+		
+		player1.setText("");
+		player2.setText("");
+		player3.setText("");
+		player4.setText("");
 		chooseStartingPlayer();
 		this.playButtonLabel.setText(generateCurrentTurnString());
 		generateCommunalPile();
