@@ -276,8 +276,11 @@ public class Round {
 		return roundWinner;
 	}
 	
-	// Method to return game winner;
-	public Player getGameWinner() {
+	/**
+	 * Returns the Player who won the Game.
+	 *
+	 * @return the winner of the Game, Player
+	 */	public Player getGameWinner() {
 		return gameWinner;
 	}
 
@@ -322,7 +325,7 @@ public class Round {
 		
 		if (user == null) {
 			userLost = true;
-			gameWinner = new Player("one of the computer players! The specification says you don't care which :)");
+			gameWinner = new Player("one of the computer players! The one above with most cards :)");
 		}
 
 		// Evaluates to true if user's is eliminated
