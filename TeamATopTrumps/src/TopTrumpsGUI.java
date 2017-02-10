@@ -455,10 +455,12 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.generateAndSetDisplayText();
 		setButtonsForNextRound();
 		updateGameInfo();
-		userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
-				           + "\nCurrent card: " + generateCurrentCardString());
 		
-		
+		if (currentPlayers[0] != null) {
+			userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
+					+ "\nCurrent card: " + generateCurrentCardString());
+		}
+
 		setPlayersHandSize(); 				  // Update players' hand size post-round
 		checkIfGameOver();
 	}
@@ -514,7 +516,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void setGameWinner() {
 
-		if (this.currentRound.getGameWinner().getName().equals(this.USER_NAME)) {
+		if (this.currentRound.getGameWinner().getName().equals(this.USER_NAME)
+				&& this.currentRound.getGameWinner() != null) {
 			this.currentGame.setHumanWinner(true);
 		} else {
 			this.currentGame.setHumanWinner(false);

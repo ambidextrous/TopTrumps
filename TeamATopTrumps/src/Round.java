@@ -92,7 +92,7 @@ public class Round {
 		// Redistribute cards according to which player won the round
 		distributeCards();
 		
-		// Check if any player have been eliminated
+		// Check if any players have been eliminated
 		checkEliminations();
 
 		System.out.println(LINE_BREAK);
@@ -106,7 +106,9 @@ public class Round {
 	}
 
 	
-	// Method to check if players have been eliminated
+	/**
+	 * Checks if any players have been eliminated (i.e. have no cards left)
+	 */
 	public void checkEliminations() {
 		for (int i = 0; i < players.length; i++) {
 			if (players[i].getHandSize() == 0) {
@@ -316,9 +318,15 @@ public class Round {
 
 		int playerIndex = 0;
 		Player user = this.players[playerIndex];
+		boolean userLost = false;
+		
+		if (user == null) {
+			userLost = true;
+			gameWinner = new Player("one of the computer players");
+		}
 
-		// Evaluates to true if user's is eliminatd
-		return (user == null);
+		// Evaluates to true if user's is eliminated
+		return userLost;
 	}
 
 	/**
@@ -400,7 +408,7 @@ public class Round {
 
 		} else if (this.boolUserLostGame()) {
 			s += String.format("YOU LOST THE GAME!%n%n");
-			printWinner();
+//			printWinner();
 		}
 
 		return s;
