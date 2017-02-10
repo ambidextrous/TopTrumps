@@ -107,7 +107,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.DECK_FILE_NAME = "deck.txt";
 
 		// Comment out filename and add another to use a different deck
-		this.NUM_CARDS = 40;
+		this.NUM_CARDS = 15;
 		this.USER_NAME = "You";
 		this.LINE_BREAK_STRING = "-------------------------------------" 
 		                       + "-------------------------------------"
@@ -486,7 +486,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		String gameResult = "lost";
 
-		if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
+		if (this.currentRound.getGameWinner().getName().equals(this.USER_NAME)) {
 			gameResult = "won";
 		}
 
@@ -514,7 +514,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void setGameWinner() {
 
-		if (this.currentRound.getWinner().getName().equals(this.USER_NAME)) {
+		if (this.currentRound.getGameWinner().getName().equals(this.USER_NAME)) {
 			this.currentGame.setHumanWinner(true);
 		} else {
 			this.currentGame.setHumanWinner(false);
@@ -1009,22 +1009,42 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	private void setPlayersHandSize() {
 
 		if (this.currentPlayers.length == 2) {
-			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			if (currentPlayers[1] != null) {
+				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			}
 		}
 		if (currentPlayers.length == 3) {
+			if (currentPlayers[1] != null) {
 			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			}
+			if (currentPlayers[2] != null) {
 			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
+			}
 		}
 		if (currentPlayers.length == 4) {
-			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
-			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
-			player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
+			if (currentPlayers[1] != null) {
+				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			}
+			if (currentPlayers[2] != null) {
+				player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
+			}
+			if (currentPlayers[3] != null) {
+				player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
+			}
 		}
 		if (currentPlayers.length == 5) {
-			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
-			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
-			player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
-			player4.setText("Cards left in hand:\n" + currentPlayers[4].getHandSize());
+			if (currentPlayers[1] != null) {
+				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
+			}
+			if (currentPlayers[2] != null) {
+				player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
+			}
+			if (currentPlayers[3] != null) {
+				player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
+			}		
+			if (currentPlayers[4] != null) {
+				player3.setText("Cards left in hand:\n" + currentPlayers[4].getHandSize());
+			}	
 		}
 	}
 }

@@ -17,7 +17,8 @@ public class Round {
 	private String LINE_BREAK;
 	private int trumpIndex;
 	private CommunalPile pile;
-	private Player winner;
+	private Player roundWinner;
+	private Player gameWinner;
 	private Player decidingPlayer;
 	private Deck deck;
 	private boolean draw;
@@ -31,7 +32,7 @@ public class Round {
 		this.players = playersArray;
 		this.deck = d;
 		this.pile = CP;
-		this.winner = null;
+		this.roundWinner = null;
 		this.draw = false;
 		this.decidingPlayer=CurrentDecidingPlayer;
 
@@ -90,6 +91,9 @@ public class Round {
 
 		// Redistribute cards according to which player won the round
 		distributeCards();
+		
+		// Check if any player have been eliminated
+		checkEliminations();
 
 		System.out.println(LINE_BREAK);
 		System.out.println("Player hands post-round: \n");
@@ -101,6 +105,16 @@ public class Round {
 		}
 	}
 
+	
+	// Method to check if players have been eliminated
+	public void checkEliminations() {
+		for (int i = 0; i < players.length; i++) {
+			if (players[i].getHandSize() == 0) {
+				players[i] = null;
+			}
+		}
+	}
+	
 	/**
 	 * Method to return an integer array containing the Trump values from the
 	 * previous round.
@@ -112,7 +126,7 @@ public class Round {
 
 		for (int i = 0; i < cards.length; i++) {
 
-			if (players[i].getHandSize() != 0) {
+			if ((players[i] != null) && (players[i].getHandSize() != 0)) {
 
 				cards[i] = players[i].viewTopCard();
 				prevTrumpValues[i] = cards[i].getAttriValAtIndex(trumpIndex);
@@ -128,7 +142,7 @@ public class Round {
 	 */
 	private void distributeCards() {
 
-		if (winner == null) {
+		if (roundWinner == null) {
 
 			// Add cards to CommunalPile
 			for (int i = 0; i < cardsInPlay.length; i++) {
@@ -145,7 +159,7 @@ public class Round {
 				Card c = cardsInPlay[i];
 
 				if (c != null) {
-					winner.giveCard(c);
+					roundWinner.giveCard(c);
 				}
 			}
 
@@ -155,7 +169,7 @@ public class Round {
 				Card c = pile.getCardAtIndex(i);
 
 				if (c != null) {
-					winner.giveCard(c);
+					roundWinner.giveCard(c);
 				}
 			}
 			pile = new CommunalPile();
@@ -174,7 +188,7 @@ public class Round {
 
 		for (int i = 0; i < players.length; i++) {
 
-			if (players[i].getHandSize() != 0) {
+			if ((players[i] != null) && players[i].getHandSize() != 0) {
 				Card c = players[i].takeCard();
 				cardsArray[i] = c;
 			}
@@ -229,12 +243,9 @@ public class Round {
 
 		int topScore = 0;
 		
-		// Represents the cards a player has in play - always 1.
-		final int playerCardsInPlay = 1;
-
 		for (int i = 0; i < this.players.length; i++) {
 
-			if ((players[i].getHandSize() + playerCardsInPlay) > 0) {
+			if (players[i] != null) {
 
 				// Look at players' cards in play
 				try{
@@ -242,10 +253,10 @@ public class Round {
 				int playerScore = c.getAttriValAtIndex(this.trumpIndex);
 
 				if (playerScore == topScore) {
-					winner = null; // Draw scenario, reset winner to null
+					roundWinner = null; // Draw scenario, reset winner to null
 				} else if (playerScore > topScore) {
 					topScore = playerScore;
-					winner = players[i];
+					roundWinner = players[i];
 				}
 				} catch (Exception e){
 					System.out.println("" + players[i] + " has no cards left.");
@@ -260,7 +271,12 @@ public class Round {
 	 * @return the winner of the Round, Player
 	 */
 	public Player getWinner() {
-		return winner;
+		return roundWinner;
+	}
+	
+	// Method to return game winner;
+	public Player getGameWinner() {
+		return gameWinner;
 	}
 
 	/**
@@ -273,9 +289,22 @@ public class Round {
 		
 		int playerIndex = 0;
 		Player user = this.players[playerIndex];
+		boolean userWon = false;
+		int countOfPlayers = 0;
 
-		// Evaluates to true if user's hand size == # cards in deck		
-		return user.getHandSize() == this.deck.getDeckLength()-this.pile.getPileSize();
+		
+		for (int i = 0; i < players.length; i++) {
+			if (players[i] != null) {
+				countOfPlayers++;
+			}
+		}
+		
+		if (user != null && countOfPlayers == 1) {
+			userWon = true;
+			gameWinner = user;
+		}
+		
+		return userWon;
 	}
 
 	/**
@@ -288,8 +317,8 @@ public class Round {
 		int playerIndex = 0;
 		Player user = this.players[playerIndex];
 
-		// Evaluates to true if user's hand size is 0
-		return user.getHandSize() == 0;
+		// Evaluates to true if user's is eliminatd
+		return (user == null);
 	}
 
 	/**
@@ -348,7 +377,7 @@ public class Round {
 		if (this.draw) {
 			s += String.format("This round was a draw.%n%n");
 		} else {
-			s += String.format("%s won the previous round%n%n", this.winner.getName());
+			s += String.format("%s won the previous round%n%n", this.roundWinner.getName());
 		}
 		return s;
 	}
@@ -391,7 +420,7 @@ public class Round {
 
 			Player p = players[i];
 
-			if (p.getHandSize() > 0) {
+			if ((p != null) && (p.getHandSize() > 0)) {
 
 				Card c = p.viewTopCard();
 
@@ -489,7 +518,7 @@ public class Round {
 
 			Player p = this.players[i];
 
-			if (p.getHandSize() > 0) {
+			if ((p != null) && (p.getHandSize() > 0)) {
 				printPlayerHand(p);
 			}
 		}
@@ -556,9 +585,7 @@ public class Round {
 
 			Player p = this.players[i];
 
-			if (p.getHandSize() > 0) {
-
-				Card c = p.getCardAtIndex(0);
+			if (p != null) {
 				System.out.println(p.getName() + ": " + prevTrumpValues[i]);
 			}
 		}
@@ -572,7 +599,7 @@ public class Round {
 
 		System.out.println(this.LINE_BREAK);
 		System.out.println();
-		System.out.println("The winner of the game is: " + this.winner.getName());
+		System.out.println("The winner of the game is: " + this.gameWinner.getName());
 		System.out.println();
 		System.out.println(this.LINE_BREAK);
 	}
