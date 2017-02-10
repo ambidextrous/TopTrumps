@@ -111,7 +111,7 @@ public class Round {
 	 */
 	public void checkEliminations() {
 		for (int i = 0; i < players.length; i++) {
-			if (players[i].getHandSize() == 0) {
+			if ((players[i] != null) && (players[i].getHandSize() == 0)) {
 				players[i] = null;
 			}
 		}
