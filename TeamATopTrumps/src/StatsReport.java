@@ -49,7 +49,7 @@ public class StatsReport extends JFrame implements ActionListener {
 		pan.add(exit);
 
 		// Sets text colour
-		Color blue = new Color(0, 0, 255);
+		Color blue = new Color(200, 0, 127);
 		textArea.setDisabledTextColor(blue);
 
 		// Sets basic window parameters
@@ -110,7 +110,7 @@ public class StatsReport extends JFrame implements ActionListener {
 
 			String numHumanWins = String.format("Number of human wins " + "= %d%n%n", numHumanW);
 
-			String avNumDraws = String.format("Average number of draws " + "= %f%n%n", aveNumDraws);
+			String avNumDraws = String.format("Average number of draws " + "= %3.2f%n%n", aveNumDraws);
 
 			String maxNumRounds = String.format("Highest number of rounds played " + "in a single game " + "= %d%n%n",
 					maxNumR);
