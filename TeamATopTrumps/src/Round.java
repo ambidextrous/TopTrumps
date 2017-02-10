@@ -322,7 +322,7 @@ public class Round {
 		
 		if (user == null) {
 			userLost = true;
-			gameWinner = new Player("one of the computer players");
+			gameWinner = new Player("one of the computer players! The specification says you don't care which :)");
 		}
 
 		// Evaluates to true if user's is eliminated
@@ -408,7 +408,7 @@ public class Round {
 
 		} else if (this.boolUserLostGame()) {
 			s += String.format("YOU LOST THE GAME!%n%n");
-//			printWinner();
+			printWinner();
 		}
 
 		return s;
