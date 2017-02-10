@@ -459,6 +459,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		if (currentPlayers[0] != null) {
 			userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
 					+ "\nCurrent card: " + generateCurrentCardString());
+		} else {
+			userAttributes.setText("Cards left in hand: 0");
 		}
 
 		setPlayersHandSize(); 				  // Update players' hand size post-round

@@ -261,7 +261,7 @@ public class Round {
 					roundWinner = players[i];
 				}
 				} catch (Exception e){
-					System.out.println("" + players[i] + " has no cards left.");
+					System.out.println("" + players[i].getName() + " has no cards left.");
 				}				
 			}
 		}
