@@ -1,13 +1,9 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.*;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
-
 import javax.swing.*;
 
-import javafx.event.ActionEvent;
 
 /**
  * Program: A program to load saved gym class and time table information from
@@ -24,14 +20,12 @@ public class StatsReport extends JFrame implements ActionListener {
 	// Instance variables
 	private JTextArea textArea;
 	private JButton saveExit, exit;
-	private TrumpsDBI DB;
 	private String displayText;
 
 	// Constructor
 	public StatsReport() {
 
 		this.textArea = new JTextArea();
-		this.DB = new TrumpsDBI();
 
 		// Sets text area disabled
 		textArea.setEnabled(false);

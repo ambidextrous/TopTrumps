@@ -14,7 +14,7 @@
 public class TeamProject {
   
     /**
-     * Programme main method, launches GUI 
+     * Program main method, launches GUI 
      * 
      * @param args 
      */

@@ -432,8 +432,6 @@ public class Round {
 
 			if ((p != null) && (p.getHandSize() > 0)) {
 
-				Card c = p.viewTopCard();
-
 				s += String.format("%s: ", players[i].getName());
 				s += String.format("%d    ", prevTrumpValues[i]);
 			}

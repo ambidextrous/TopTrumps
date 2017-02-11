@@ -1,5 +1,3 @@
-import java.util.Random;
-
 /**
  * Program: a Top Trumps game featuring a GUI and a database connection to 
  * store data.
@@ -172,26 +170,26 @@ public class Deck {
      * @return a randomly shuffled array of ints
      */
     private int[] generateShuffledIntArray(int arraySize) {
-        
-        // Generate ordered integer array
-        int[] unshuffledArray = new int[arraySize];
-        
-	for (int i = 0; i < arraySize; i++) {
-            
-            unshuffledArray[i] = i;
-        }
-        
-        // Shuffle ordered integer array using Fisher-Yates shuffle
-	for (int i = 0; i < arraySize; i++) {
-            
-	    int rand = i + (int) (Math.random() * (arraySize - i));
-	    int randomElement = unshuffledArray[rand];
-	    unshuffledArray[rand] = unshuffledArray[i];
-	    unshuffledArray[i] = randomElement;
-	}
-        
-        int[] shuffledArray = unshuffledArray;
-        
-        return shuffledArray;
+
+    	// Generate ordered integer array
+    	int[] unshuffledArray = new int[arraySize];
+
+    	for (int i = 0; i < arraySize; i++) {
+
+    		unshuffledArray[i] = i;
+    	}
+
+    	// Shuffle ordered integer array using Fisher-Yates shuffle
+    	for (int i = 0; i < arraySize; i++) {
+
+    		int rand = i + (int) (Math.random() * (arraySize - i));
+    		int randomElement = unshuffledArray[rand];
+    		unshuffledArray[rand] = unshuffledArray[i];
+    		unshuffledArray[i] = randomElement;
+    	}
+
+    	int[] shuffledArray = unshuffledArray;
+
+    	return shuffledArray;
     }    
 }
