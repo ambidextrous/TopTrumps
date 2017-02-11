@@ -446,18 +446,30 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		this.communalPileLabel.setText(this.currentRound.getCommunalPileString());
 		this.prevRoundString = currentRound.getRoundString();
 		this.generateAndSetDisplayText();
-		setButtonsForNextRound();
-		updateGameInfo();
 		
-		if (currentPlayers[0] != null) {
+		setButtonsForNextRound();		// Update which buttons are enabled
+		updateGameInfo();				// Update 'currentGame' instance variable		
+		setUserHandSize();				// Display user's hand size post round	
+		setPlayersHandSize(); 			// Display players' hand size post-round
+		checkIfGameOver();
+	}
+	
+	
+	/**
+	 * Updates GUI with user's hand size. If user is eliminated, will update GUI
+	 * with message reflecting that the game is over.
+	 */
+	
+	private void setUserHandSize() {
+		
+		Player user = currentPlayers[0];
+		
+		if (user != null) {
 			userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
 					+ "\nCurrent card: " + generateCurrentCardString());
 		} else {
 			userAttributes.setText("You have no cards left. Game over!");
 		}
-
-		setPlayersHandSize(); 				  // Update players' hand size post-round
-		checkIfGameOver();
 	}
 
 	/**
@@ -761,9 +773,10 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		printShuffledDeck();
 		printPlayerDecks();
 		
-		// Update GUI with each player's starting hand size
+		// Update GUI with each opponent's starting hand size.
 		setPlayersHandSize();
-
+		// Update GUI with the user's starting hand size.
+		setUserHandSize();
 		// Update GUI 'Previous Round Information' box.
 		generateAndSetDisplayText();
 	}
