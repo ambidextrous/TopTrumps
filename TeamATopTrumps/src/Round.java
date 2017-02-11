@@ -68,8 +68,9 @@ public class Round {
 		int highestAttInd = 0;
 		int highestAttVal = 0;
 
-		for (int i = 0; i < NUM_ATTRIBUTES; i++) {
-
+		// Starts at 1 as first attribute is always name of card.
+		for (int i = 1; i <= NUM_ATTRIBUTES; i++) {
+						
 			if (topCard.getAttriValAtIndex(i) > highestAttVal) {
 				highestAttVal = topCard.getAttriValAtIndex(i);
 				highestAttInd = i;

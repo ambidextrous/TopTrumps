@@ -73,7 +73,8 @@ public class Player {
      * @param index, int
      * @return the Card at that index
      */
-    public Card getCardAtIndex(int index) {      
+    public Card getCardAtIndex(int index) {     
+    	
         return this.hand[index];
     }
     
@@ -117,8 +118,8 @@ public class Player {
         if (this.getHandSize() == 0) {
             
             this.stillInGame = false;
-        }      
-        return takenCard;
+        }      	
+       return takenCard;
     }
     
     /**

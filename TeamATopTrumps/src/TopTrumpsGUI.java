@@ -89,13 +89,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	public TopTrumpsGUI() throws HeadlessException {
 
 		//----------Constants----------
-		/**
-		 * Debugging note:
-		 *
-		 * Change the values of this.DECK_FILE_NAME and the corresponding value
-		 * of this.NUM_CARDS to use a different deck.
-		 */
-
 		// Comment out filename and add another to use a different deck
 		this.DECK_FILE_NAME = "deck.txt";
 
@@ -302,7 +295,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// Refresh screen
 		this.repaint();
 		this.revalidate();
-
 	}
 
 	/**
@@ -498,8 +490,8 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			gameResult = "won";
 		}
 
-		int choice = JOptionPane.showConfirmDialog(null, "Game over, " + "you " + gameResult 
-				   + "! \nDo you want to save the game " + "information?", "Game Over",
+		int choice = JOptionPane.showConfirmDialog(null, "Game over, you " + gameResult 
+				   + "! \nDo you want to save the game information?", "Game Over",
 				     JOptionPane.YES_NO_OPTION, JOptionPane.INFORMATION_MESSAGE);
 
 		if (choice == JOptionPane.YES_OPTION) {
