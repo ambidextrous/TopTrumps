@@ -102,9 +102,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// Comment out filename and add another to use a different deck
 		this.NUM_CARDS = 40;
 		this.USER_NAME = "You";
-		this.LINE_BREAK_STRING = "-------------------------------------" 
-		                       + "-------------------------------------"
-				               + "--------------------------";
+		this.LINE_BREAK_STRING = "--------------------------------------" 
+		                       + "--------------------------------------"
+				               + "---------------------------------------";
 
 		// Previous round display initialised to an empty String
 		this.prevRoundString = "";
@@ -436,7 +436,6 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 					                NUM_CARDS);
 
 		this.currentRound = CurrRound;		  // Assigned to instance variable
-		this.currentRound.saveTrumpValues();  // Save previous Trump values
 		this.currentRound.playRound();	      // Play a round within the game	
 		currentPile = currentRound.getPile(); // Update cards in communal pile 
 		resetDecidingPlayer();				  // Determine which player starts

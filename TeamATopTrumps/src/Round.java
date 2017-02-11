@@ -24,7 +24,7 @@ public class Round {
 	private boolean draw;
 	private int[] prevTrumpValues;
 
-	public Round(Player[] playersArray, Player CurrentDecidingPlayer, CommunalPile CP, int trumpInd, Deck d,
+	public Round(Player[] playersArray, Player currentDecidingPlayer, CommunalPile CP, int trumpInd, Deck d,
 			String lineBreak, int numCards) {
 
 		this.NUM_ATTRIBUTES = 5;
@@ -34,29 +34,36 @@ public class Round {
 		this.pile = CP;
 		this.roundWinner = null;
 		this.draw = false;
-		this.decidingPlayer=CurrentDecidingPlayer;
-
-		int userChoseTrump = 0;
+		this.decidingPlayer=currentDecidingPlayer;
 
 		prevTrumpValues = new int[players.length];
 
 		// User player choice or algorithm to select trump for round
-		if (trumpInd == userChoseTrump) {
-			this.trumpIndex = getCompTrumpIndex();
-		} else {
+		if (decidingPlayer.getName().equals("You")) {
 			this.trumpIndex = trumpInd;
-		}
+		} 
 	}
 
 	/**
 	 * AI method to have the computer player whose turn it is choose to play the
 	 * highest valued attribute on their card.
-	 *
-	 * @return the index of the computer Card attribute with the highest value
 	 */
-	private int getCompTrumpIndex() {
-
-		Card topCard = decidingPlayer.viewTopCard();
+	private void getCompTrumpIndex() {
+		
+		// Track index of the computer player
+		int compPlayerIndex = -1;
+		
+		if (decidingPlayer.getName().equals("WatsonBot")){
+			compPlayerIndex = 1;
+		} else if (decidingPlayer.getName().equals("Amiga64Bot")){
+			compPlayerIndex = 2;
+		} else if (decidingPlayer.getName().equals("BabbageBot")){
+			compPlayerIndex = 3;
+		} else if (decidingPlayer.getName().equals("TuringBot")){
+			compPlayerIndex = 4;
+		}
+		
+		Card topCard = cardsInPlay[compPlayerIndex];
 
 		int highestAttInd = 0;
 		int highestAttVal = 0;
@@ -68,7 +75,7 @@ public class Round {
 				highestAttInd = i;
 			}
 		}
-		return highestAttInd;
+		trumpIndex = highestAttInd;
 	}
 
 	/**
@@ -82,7 +89,13 @@ public class Round {
 
 		// Takes top cards from players' hands into play
 		cardsInPlay = takeCards(); 
+		
+		// If you are not the deciding player
+		if (! decidingPlayer.getName().equals("You")) {
+			getCompTrumpIndex();
+		}
 
+		saveTrumpValues();		   // Save Trump values for this round
 		printCardsInPlay();        // Print cards in play to console
 		printTrumpInfo();		   // Print trump info to console
 		this.draw = checkIfDraw(); // Check if round was a draw
@@ -95,7 +108,7 @@ public class Round {
 		checkEliminations();
 
 		System.out.println(LINE_BREAK);
-		System.out.println("Player hands post-round: \n");
+		System.out.println("Player hands post-round:");
 		printPlayerHands();  	   // Print player hands post round
 
 		// If communal pile now has cards, print in console
@@ -128,8 +141,7 @@ public class Round {
 		for (int i = 0; i < cards.length; i++) {
 
 			if ((players[i] != null) && (players[i].getHandSize() != 0)) {
-
-				cards[i] = players[i].viewTopCard();
+				cards[i] = cardsInPlay[i];
 				prevTrumpValues[i] = cards[i].getAttriValAtIndex(trumpIndex);
 			}
 		}
@@ -481,8 +493,6 @@ public class Round {
 	 */
 	private void printDeckAttributeNames() {
 
-		System.out.println();
-
 		String attribute1Name = this.deck.getAttriNameAtIndex(1);
 		String attribute2Name = this.deck.getAttriNameAtIndex(2);
 		String attribute3Name = this.deck.getAttriNameAtIndex(3);
@@ -545,6 +555,7 @@ public class Round {
 		System.out.println(this.LINE_BREAK);
 		System.out.println();
 		System.out.println("Cards in hand belonging to: " + p.getName());
+		System.out.println();
 
 		printDeckAttributeNames();
 
@@ -565,10 +576,20 @@ public class Round {
 		System.out.println();
 		System.out.println("******** Cards currently in play: ********");
 
+		
+		String align = " ";
+		String alignAttributes = String.format("%15s", align);
+		
+		System.out.print(alignAttributes);
 		printDeckAttributeNames();
+		
 
 		for (int i = 0; i < cardsInPlay.length; i++) {
 			if (cardsInPlay[i] != null) {
+				
+				String playerName = String.format("%-15s", players[i].getName());
+				
+				System.out.print(playerName);
 				printCard(cardsInPlay[i]);
 			}
 		}
@@ -583,8 +604,8 @@ public class Round {
 	private void printTrumpInfo() {
 
 		System.out.println(this.LINE_BREAK);
-		System.out.println("Category selected: " + this.deck.getAttriNameAtIndex(trumpIndex));
-
+		System.out.println(decidingPlayer.getName() + " chose to play " 
+						+ this.deck.getAttriNameAtIndex(trumpIndex) + "!");
 		System.out.println();
 		System.out.println("Corresponding Trump values:");
 		System.out.println();
