@@ -56,7 +56,6 @@ public class Round {
 	 */
 	private int getCompTrumpIndex() {
 
-		System.out.println(decidingPlayer.getName());
 		Card topCard = decidingPlayer.viewTopCard();
 
 		int highestAttInd = 0;

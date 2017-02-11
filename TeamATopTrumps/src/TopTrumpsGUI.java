@@ -352,7 +352,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		// and debugging purposes.
 		printUnshuffledDeck();
 
-		// Asigns correct names to attribute choice buttons
+		// Assigns correct names to attribute choice buttons.
 		playAttr1Button.setText(attri1Name);
 		playAttr2Button.setText(attri2Name);
 		playAttr3Button.setText(attri3Name);
@@ -460,7 +460,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			userAttributes.setText("Cards left in hand: " + currentPlayers[0].getHandSize() 
 					+ "\nCurrent card: " + generateCurrentCardString());
 		} else {
-			userAttributes.setText("Cards left in hand: 0");
+			userAttributes.setText("You have no cards left. Game over!");
 		}
 
 		setPlayersHandSize(); 				  // Update players' hand size post-round
@@ -741,15 +741,9 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 	 */
 	private void startNewGame() {
 
-		// Clear text area of previous game info
+		// Clear text area of previous game info.
 		prevRoundString = "";		
 
-		/**
-		 * Debugging note:
-		 *
-		 * Comment out the line below to stop the deck from being shuffled,
-		 * useful for testing.
-		 */
 		currentDeck.shuffleDeck();		
 
 		// Call methods to generate and display new game.
@@ -773,7 +767,11 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 		printShuffledDeck();
 		printPlayerDecks();
+		
+		// Update GUI with each player's starting hand size
+		setPlayersHandSize();
 
+		// Update GUI 'Previous Round Information' box.
 		generateAndSetDisplayText();
 	}
 
@@ -788,7 +786,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			Player P = currentPlayers[i];
 
 			System.out.println(LINE_BREAK_STRING);
-			System.out.println("");
+			System.out.println();
 			System.out.println("Cards belonging to: " + P.getName());
 
 			printDeckAttributeNames();
@@ -1009,7 +1007,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 
 	/**
 	 * Sets the textAreas of players currently playing with the number of cards
-	 * in hand after each round
+	 * in hand after each round.
 	 */
 	private void setPlayersHandSize() {
 
@@ -1017,58 +1015,58 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 			if (currentPlayers[1] != null) {
 				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
 			} else {
-				player1.setText("Cards left in hand: 0");
+				player1.setText("No cards left.\nEliminated!");
 			}
 		}
 		if (currentPlayers.length == 3) {
 			if (currentPlayers[1] != null) {
 			player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
 			} else {
-				player1.setText("Cards left in hand: 0");
+				player1.setText("No cards left.\nEliminated!");
 			}
 			if (currentPlayers[2] != null) {
 			player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
 			} else {
-				player2.setText("Cards left in hand: 0");
+				player2.setText("No cards left.\nEliminated!");
 			}
 		}
 		if (currentPlayers.length == 4) {
 			if (currentPlayers[1] != null) {
 				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
 			} else {
-				player1.setText("Cards left in hand: 0");
+				player1.setText("No cards left.\nEliminated!");
 			}
 			if (currentPlayers[2] != null) {
 				player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
 			} else {
-				player2.setText("Cards left in hand: 0");
+				player2.setText("No cards left.\nEliminated!");
 			}
 			if (currentPlayers[3] != null) {
 				player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
 			} else {
-				player3.setText("Cards left in hand: 0");
+				player3.setText("No cards left.\nEliminated!");
 			}
 		}
 		if (currentPlayers.length == 5) {
 			if (currentPlayers[1] != null) {
 				player1.setText("Cards left in hand:\n" + currentPlayers[1].getHandSize());
 			} else {
-				player1.setText("Cards left in hand: 0");
+				player1.setText("No cards left.\nEliminated!");
 			}
 			if (currentPlayers[2] != null) {
 				player2.setText("Cards left in hand:\n" + currentPlayers[2].getHandSize());
 			} else {
-				player2.setText("Cards left in hand: 0");
+				player2.setText("No cards left.\nEliminated!");
 			}
 			if (currentPlayers[3] != null) {
 				player3.setText("Cards left in hand:\n" + currentPlayers[3].getHandSize());
 			} else {
-				player3.setText("Cards left in hand: 0");
+				player3.setText("No cards left.\nEliminated!");
 			}	
 			if (currentPlayers[4] != null) {
 				player4.setText("Cards left in hand:\n" + currentPlayers[4].getHandSize());
 			} else {
-				player4.setText("Cards left in hand: 0");
+				player4.setText("No cards left.\nEliminated!");
 			}
 		}
 	}
