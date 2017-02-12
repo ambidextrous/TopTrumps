@@ -755,6 +755,7 @@ public class TopTrumpsGUI extends JFrame implements ActionListener {
 		chooseStartingPlayer();
 		this.playButtonLabel.setText(generateCurrentTurnString());
 		generateCommunalPile();
+		this.communalPileLabel.setText("");
 		dealCards();
 
 		this.userAttributes.setText("Current card: " + generateCurrentCardString());
